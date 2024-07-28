@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_URL = '/accounts/login/'
+
 
 # Application definition
 
@@ -42,9 +44,10 @@ INSTALLED_APPS = [
     'accounts',
     'admin_dashboard',
     'users',
-    'employers',
+    'jobs',
     'crispy_forms',
     'crispy_bootstrap5',
+    'tinymce',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

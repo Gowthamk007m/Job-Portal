@@ -9,23 +9,24 @@ class CustomUser(AbstractUser):
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),
+        ('O', 'Other'),
     )
     COUNTRY_CHOICES = (
         ('IN', 'India'),
+        ('US', 'United States'),
+        ('CA', 'Canada'),
+        ('GB', 'United Kingdom'),
+        ('JP', 'Japan'),
     )
 
-    email = models.EmailField(
-        'email address', unique=True, blank=False, null=False)
+    email = models.EmailField( 'email address', unique=True, blank=False, null=False)
     phone = models.CharField(max_length=15, blank=True, null=True)
-    profile_photo = models.ImageField(
-        upload_to='user_photos/', blank=True, null=True)
+    profile_photo = models.ImageField( upload_to='user_photos/', blank=True, null=True)
     dob = models.DateField(blank=True, null=True)
     short_bio = models.TextField(max_length=500, blank=True, null=True)
     job_title = models.CharField(max_length=255, blank=True, null=True)
-    gender = models.CharField(
-        max_length=1, default='M', choices=GENDER_CHOICES)
-    country = models.CharField(
-        max_length=50, default='IN', choices=COUNTRY_CHOICES)
+    gender = models.CharField( max_length=1, default='M', choices=GENDER_CHOICES)
+    country = models.CharField( max_length=50, default='IN', choices=COUNTRY_CHOICES)
     open_to_hiring = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
@@ -55,8 +56,7 @@ class Address(models.Model):
     address_line_3 = models.TextField(max_length=250)
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
-    country = models.CharField(
-        max_length=50, default='IN', choices=COUNTRY_CHOICES)
+    country = models.CharField( max_length=50, default='IN', choices=COUNTRY_CHOICES)
     pincode = models.CharField(max_length=25)
     phone = models.CharField(max_length=15, blank=True, null=True)
     is_default = models.BooleanField(default=True)
@@ -71,44 +71,14 @@ class Address(models.Model):
 
 
 class Hobby(models.Model):
-    HOBBY_CHOICES = (
-        ('Reading', 'Reading'),
-        ('Traveling', 'Traveling'),
-        ('Cooking', 'Cooking'),
-        ('Sports', 'Sports'),
-        ('Gardening', 'Gardening'),
-        ('Gaming', 'Gaming'),
-        ('Fitness', 'Fitness'),
-        ('Photography', 'Photography'),
-        ('Writing', 'Writing'),
-        ('Dancing', 'Dancing'),
-    )
+    name = models.CharField(max_length=100, unique=True)
 
-    name = models.CharField(max_length=100, choices=HOBBY_CHOICES, unique=True)
 
     def __str__(self):
         return self.name
-    
+
 class Interest(models.Model):
-    INTEREST_CHOICES = (
-        ('Technology', 'Technology'),
-        ('Science', 'Science'),
-        ('Literature', 'Literature'),
-        ('Travel', 'Travel'),
-        ('Food', 'Food'),
-        ('Health', 'Health'),
-        ('Fitness', 'Fitness'),
-        ('Education', 'Education'),
-        ('Fashion', 'Fashion'),
-        ('Entertainment', 'Entertainment'),
-        ('Finance', 'Finance'),
-        ('Politics', 'Politics'),
-        ('Environment', 'Environment'),
-        ('Sports', 'Sports'),
-        ('History', 'History'),
-    )
-    
-    name = models.CharField(max_length=100, choices=INTEREST_CHOICES, unique=True)
+    name = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
         return self.name
@@ -120,7 +90,6 @@ class UserActivity(models.Model):
     smoking_habit = models.BooleanField(default=False)
     drinking_habit = models.BooleanField(default=False)
 
-
     def __str__(self):
         return self.user.username
 
@@ -130,7 +99,6 @@ class UserQualifications(models.Model):
         ('High School', 'High School'),
         ('Diploma', 'Diploma'),
         ('Undergraduate', 'Undergraduate'),
-        ('Graduate', 'Graduate'),
         ('Postgraduate', 'Postgraduate'),
         ('PhD', 'PhD'),
         ('Other', 'Other'),
@@ -145,3 +113,11 @@ class UserQualifications(models.Model):
 
     def __str__(self):
         return f"{self.level} at {self.institution}"
+    
+
+LEVEL_CHOICES = (
+    ('beginner', 'Beginner'),
+    ('intermediate', 'Intermediate'),
+    ('advanced', 'Advanced'),
+    ('expert', 'Expert'),
+)

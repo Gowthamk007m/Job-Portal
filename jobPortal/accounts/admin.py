@@ -7,7 +7,7 @@ from .models import CustomUser,Address,Hobby,Interest,UserActivity,UserQualifica
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     model = CustomUser
-    list_display = ["email", "username",]
+    list_display = ["email", "username","id"]
 
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Address)

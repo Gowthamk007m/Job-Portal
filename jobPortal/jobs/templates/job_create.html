@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Complete Profile{% endblock %}
+
+{% block extra_styles %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-5">
+    <div class="container">
+        <!-- Title -->
+        <!-- <div class="d-flex justify-content align-items-lg-center py-3 flex-column flex-lg-row">
+            <h2 class="h5 mb-3 mb-lg-0 text-primary"><a href="#" class="text-muted"><i class="bi bi-arrow-left-square me-2"></i></a> Setup Profile</h2>
+        </div> -->
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-12 ">
+                <!-- Basic information -->
+                <div class="card mb-4 shadow">
+                    <form class="card-body" method="post">
+                        {% csrf_token %}
+             {{form}}
+
+             <button class="m-2 " type="submit">Post</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_script %}
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script src="https://cdn.tiny.cloud/1/2hgv81y54xc01vmnbp8pre1ylwsfvvamsla2umvzuma66wa2/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    tinymce.init({selector:'textarea'});
+</script>
+{% endblock %}

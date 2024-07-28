@@ -21,11 +21,12 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include(('core.urls','core'),namespace='core')),
+    path('core/',include(('core.urls','core'),namespace='core')),
     path('accounts/',include(('accounts.urls','accounts'),namespace='accounts')),
     path('users/', include('users.urls', namespace='users')),
-    path('employers/', include('employers.urls', namespace='employers')),
-    path('administrator/', include('admin_dashboard.urls', namespace='admin_dashboard')),   
+    path('', include('jobs.urls', namespace='jobs')),
+    path('administrator/', include('admin_dashboard.urls', namespace='admin_dashboard')), 
+    path('tinymce/', include('tinymce.urls')),  
 ]
 
 if settings.DEBUG:

@@ -7,7 +7,7 @@ class UserProfileForm(LoginRequiredMixin,TemplateView):
     template_name = 'users/complete_profile.html'
     
 class UserHome(LoginRequiredMixin,TemplateView):
-    template_name = 'users/user_home.html'
+    template_name = 'users/index.html'
     
 class JobDetails(TemplateView):
     template_name = 'users/job_detail.html'

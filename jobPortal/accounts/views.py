@@ -1,21 +1,26 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login
 
 from .models import *
-from .forms import CustomUserCreationForm, LoginForm,ActivitiesForm,QualificationsForm
+from .forms import CustomUserCreationForm, LoginForm,ActivitiesForm,QualificationsForm,DetailsForm
 from django.contrib import messages
-from django.views.generic import CreateView,UpdateView
+from django.views.generic import CreateView,UpdateView,ListView,TemplateView
 from django.views import View
 from django.contrib.auth import logout 
 
 class RegisterView(SuccessMessageMixin, CreateView):
     template_name = 'auth/register.html'
-    success_url = reverse_lazy('accounts:login')
     form_class = CustomUserCreationForm
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return HttpResponseRedirect(reverse('accounts:create_details', kwargs={'id': user.id}))
 
 
 class LoginView(View):
@@ -35,7 +40,7 @@ class LoginView(View):
 
             if user is not None:
                 login(request, user)
-                return redirect('users:jobs')
+                return redirect('jobs:home')
             else:
                 form.add_error(None, "Invalid email or password.")
                 return render(request, self.template_name, {'form': form})
@@ -53,11 +58,16 @@ class LogoutView(View):
 
 
 
-class DeatilsCreateView(LoginRequiredMixin, CreateView):
-    form_class = ActivitiesForm
+class DetailsCreateView(LoginRequiredMixin, UpdateView):
+    model=CustomUser
+    form_class = DetailsForm
     template_name = 'users/complete_profile.html'
-    success_url = reverse_lazy('users:jobs')
+    success_url = reverse_lazy('accounts:create_activities')
+    pk_url_kwarg = 'id'
 
+    def get_queryset(self):
+        return CustomUser.objects.filter(username=self.request.user.username)
+    
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
@@ -65,7 +75,7 @@ class DeatilsCreateView(LoginRequiredMixin, CreateView):
 class ActivitiesCreateView(LoginRequiredMixin, CreateView):
     form_class = ActivitiesForm
     template_name = 'users/user_activities.html'
-    success_url = reverse_lazy('users:jobs')
+    success_url = reverse_lazy('accounts:create_qualifications')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -74,7 +84,7 @@ class ActivitiesCreateView(LoginRequiredMixin, CreateView):
 class QualificationsCreateView(LoginRequiredMixin, CreateView):
     form_class = QualificationsForm
     template_name = 'users/user_qualifications.html'
-    success_url = reverse_lazy('users:jobs')
+    success_url = reverse_lazy('accounts:role')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -94,3 +104,6 @@ class QualificationsCreateView(LoginRequiredMixin, CreateView):
 
 #     def get_success_url(self):
 #         return reverse_lazy('some_view_name')
+
+class Role(LoginRequiredMixin, TemplateView):
+    template_name = 'users/role.html'

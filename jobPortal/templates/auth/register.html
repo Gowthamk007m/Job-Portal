@@ -19,16 +19,12 @@ Sign Up
         <div>{{ form.password2 }}</div>
 
         {% if form.username.errors %}
-
         <div class="alert alert-danger mt-4  pt-2 pb-0 ">
           {% for e in form.username.errors %}
           <p class="text-danger ">{{ e }}</p>
           {% endfor %}
         </div>
-
         {% endif %}
-
-
         {% if form.email.errors %}
 
         <div class="alert alert-danger mt-4  pt-2 pb-0 ">

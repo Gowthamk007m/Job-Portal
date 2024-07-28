@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block extra_styles %}
+
+{% endblock %}
+{% block content %}
+
+<div class="container">
+    <form id="profileForm" method="get" class="row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-center mt-5">
+        <div class="col">
+            <a href="#" id="jobseekerLink" class="text-decoration-none" data-profile="jobseeker">
+                <div class="card">
+                    <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/041.webp" class="card-img-top" alt="Jobseeker" />
+                    <div class="card-body">
+                        <h5 class="card-title">Jobseeker</h5>
+                        <p class="card-text">
+                            This is a longer card with supporting text below as a natural lead-in to
+                            additional content. This content is a little bit longer.
+                        </p>
+                    </div>
+                </div>
+                <input type="radio" id="jobseekerRadio" name="type" value="jobseeker" class="d-none">
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="#" id="employerLink" class="text-decoration-none" data-profile="employer">
+                <div class="card">
+                    <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/041.webp" class="card-img-top" alt="Employer" />
+                    <div class="card-body">
+                        <h5 class="card-title">Employer</h5>
+                        <p class="card-text">
+                            This is a longer card with supporting text below as a natural lead-in to
+                            additional content. This content is a little bit longer.
+                        </p>
+                    </div>
+                </div>
+                <input type="radio" id="employerRadio" name="type" value="employer" class="d-none">
+            </a>
+        </div>
+        <div class="row">
+            <button id="continueBtn" type="button" class="btn btn-black btn-lg" >Continue</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.getElementById('jobseekerLink').addEventListener('click', function() {
+        document.getElementById('jobseekerRadio').checked = true;
+    });
+
+    document.getElementById('employerLink').addEventListener('click', function() {
+        document.getElementById('employerRadio').checked = true;
+    });
+
+    document.getElementById('continueBtn').addEventListener('click', function() {
+        document.getElementById('profileForm').submit();
+    });
+</script>
+
+{% endblock %}

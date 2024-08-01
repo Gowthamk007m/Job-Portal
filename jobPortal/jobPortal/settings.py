@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'tinymce',
+    'django_htmx',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -62,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+     "django_htmx.middleware.HtmxMiddleware",
 ]
 
 ROOT_URLCONF = 'jobPortal.urls'
@@ -83,6 +85,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'jobPortal.wsgi.application'
+
 
 
 # Database

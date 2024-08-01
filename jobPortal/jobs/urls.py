@@ -6,7 +6,9 @@ app_name = 'jobs'
 urlpatterns = [
     path('', JobListView.as_view(), name='home'),
     path('JobCreate/', JobCreate.as_view(), name='JobCreate'),
+    path('JobCreateView/', JobCreateView.as_view(), name='JobCreateView'),
     path('job/create/', JobCreateView.as_view(), name='job-create'),
     path('create/job-seeker/', JobSeekerProfileUpsertView.as_view(), name='create_job_seeker_profile'),
     path('create/employee/', EmployeeProfileUpsertView.as_view(), name='create_employee_profile'),
+    
 ]

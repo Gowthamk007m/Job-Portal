@@ -1,11 +1,7 @@
-{% load static %}
 {% for job in jobs %}
-<div class="job-item p-4 mb-4">
+<div class="job-item p-4 mb-4 border border-3 rounded-3">
     <div class="row g-4">
         <div class="col-sm-12 col-md-8 d-flex align-items-center">
-            <img class="flex-shrink-0 img-fluid border rounded"
-                 src="{% static 'img/com-logo-1.jpg' %}" alt=""
-                 style="width: 80px; height: 80px;">
             <div class="text-start ps-4">
                 <h5 class="mb-3">{{ job.job_title }}</h5>
                 <span class="text-truncate me-3">
@@ -37,3 +33,14 @@
     </div>
 </div>
 {% endfor %}
+
+{% if jobs.has_next %}
+<div id="load-more" class="text-center mt-4">
+    <button class="btn btn-primary" id="load-more-btn"
+            hx-get="{% url 'jobs:home' %}?page={{ jobs.next_page_number }}&q={{ search_query }}"
+            hx-target="#load-more"
+            hx-swap="outerHTML">
+        Load More
+    </button>
+</div>
+{% endif %}

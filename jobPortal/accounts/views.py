@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login
-
+from.mixin import *
 from .models import *
 from .forms import CustomUserCreationForm, LoginForm,ActivitiesForm,QualificationsForm,DetailsForm
 from django.contrib import messages
@@ -50,12 +50,11 @@ class ForgotPasswordView(TemplateView):
     template_name = 'auth/forgot_password.html'
 
 
+
 class LogoutView(View):
     def get(self, request):
         logout(request)
         return redirect('accounts:login')
-
-
 
 
 class DetailsCreateView(LoginRequiredMixin, UpdateView):

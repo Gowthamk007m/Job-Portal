@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+   <h1>profile</h1> 
+   
+   <p>Phone: {{ user.phone }}</p>
+   <p>Date of Birth: {{ user.dob }}</p>
+   <p>Age: {{ user.age }}</p>
+   <p>Short Bio: {{ user.short_bio }}</p>
+   <p>Job Title: {{ user.job_title }}</p>
+   <p>Gender: {{ user.get_gender_display }}</p>
+   <p>Country: {{ user.get_country_display }}</p>
+   <p>Open to Hiring: {{ user.open_to_hiring }}</p>
+
+
+   <h2>Address</h2>
+   <p>Name: {{ user.address.name }}</p>
+   <p>Address Line 1: {{ user.address.address_line_1 }}</p>
+   <p>Address Line 2: {{ user.address.address_line_2 }}</p>
+   <p>Address Line 3: {{ user.address.address_line_3 }}</p>
+   <p>City: {{ user.address.city }}</p>
+   <p>State: {{ user.address.state }}</p>
+   <p>Country: {{ user.address.country }}</p>
+   <p>Postal Code: {{ user.address.pincode }}</p>
+   <p>Phone: {{ user.address.phone }}</p>
+   
+   <h2>Activities</h2>
+   <ul>
+   {% for activity in user.user_activities.all %}
+       <li>
+           <p>Smoking Habit: {{ activity.smoking_habit }}</p>
+           <p>Drinking Habit: {{ activity.drinking_habit }}</p>
+           <h3>Hobbies:</h3>
+           <ul>
+           {% for hobby in activity.hobbies.all %}
+               <li>{{ hobby.name }}</li>
+           {% endfor %}
+           </ul>
+           <h3>Interests:</h3>
+           <ul>
+           {% for interest in activity.interest.all %}
+               <li>{{ interest.name }}</li>
+           {% endfor %}
+           </ul>
+       </li>
+   {% endfor %}
+   </ul>
+</div>
+
+
+{% endblock content %}

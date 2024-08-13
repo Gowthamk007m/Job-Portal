@@ -40,7 +40,7 @@
             >Account</a
           >
           <div class="dropdown-menu rounded-0 m-0">
-            <a href="category.html" class="dropdown-item">Profile</a>
+            <a href="{% url 'users:user-profile' user.id %}" class="dropdown-item">Profile</a>
               <a class="dropdown-item text-danger" href="{% url 'accounts:logout' %}">Logout</a>
 
           </div>

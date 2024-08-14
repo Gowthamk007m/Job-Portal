@@ -51,15 +51,20 @@ INSTALLED_APPS = [
     'django_htmx',
     'rest_framework',
     'rest_framework_simplejwt',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',  # Add social providers you need
-    'dj_rest_auth',
-    'dj_rest_auth.registration', 
+    'social_django',
 ]
 
-SITE_ID = 1
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOpenIdConnect',
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '<YOUR_GOOGLE_CLIENT_ID>'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '<YOUR_GOOGLE_SECRET_CODE>'
+
+# Optionally, specify the login redirect URL
+LOGIN_REDIRECT_URL = '/'
 
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -74,7 +79,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-     "django_htmx.middleware.HtmxMiddleware",
+    'django_htmx.middleware.HtmxMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'jobPortal.urls'
@@ -157,13 +163,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL= 'accounts.CustomUser'
-
-
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',  # Default backend
-    'allauth.account.auth_backends.AuthenticationBackend',  # Allauth backend
-)
-
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (

@@ -161,3 +161,24 @@ class LoginAPIView(APIView):
             }, status=status.HTTP_200_OK)
         else:
             return Response({"detail": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+        
+
+@api_view(['POST'])
+def google_login(request):
+    token = request.data.get('token')
+    if not token:
+        return Response({'error': 'No token provided'}, status=400)
+
+    user = authenticate(request, token=token)
+    if user:
+        # Generate JWT or perform any other necessary steps
+        return Response({'token': 'YOUR_JWT_TOKEN'})
+    return Response({'error': 'Authentication failed'}, status=401)
+
+def authenticate(request, token):
+    try:
+        backend = 'social_core.backends.google.GoogleOAuth2'
+        user = psa(backend)(request)
+        return user
+    except Exception as e:
+        return None

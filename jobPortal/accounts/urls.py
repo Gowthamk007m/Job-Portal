@@ -25,9 +25,7 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
-    path('auth/', include('dj_rest_auth.urls')),  # For login/logout
-    path('auth/registration/', include('dj_rest_auth.registration.urls')),  # For registration
-    path('auth/social/', include('allauth.socialaccount.urls')),
+    
     # path('', include(router.urls)),
 
 ]

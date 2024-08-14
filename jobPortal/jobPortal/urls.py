@@ -27,6 +27,7 @@ urlpatterns = [
     path('', include('jobs.urls', namespace='jobs')),
     path('administrator/', include('admin_dashboard.urls', namespace='admin_dashboard')), 
     path('tinymce/', include('tinymce.urls')),  
+    path('auth/', include('social_django.urls', namespace='social')),
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,10 @@
+[33mc0497bf0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature-social-auth[m[33m, [m[1;31morigin/feature-social-auth[m[33m)[m HEAD@{0}: checkout: moving from version-2 to feature-social-auth
+[33me6d66d43[m[33m ([m[1;31morigin/version-2[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mversion-2[m[33m)[m HEAD@{1}: checkout: moving from feature-social-auth to version-2
+[33mc0497bf0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature-social-auth[m[33m, [m[1;31morigin/feature-social-auth[m[33m)[m HEAD@{2}: checkout: moving from ReactApp to feature-social-auth
+[33m7f801132[m[33m ([m[1;32mReactApp[m[33m)[m HEAD@{3}: checkout: moving from 448b5fa8a7c3820d4e39bff8bef0a18a6826be93 to ReactApp
+[33m448b5fa8[m[33m ([m[1;32mVersion-2[m[33m)[m HEAD@{4}: checkout: moving from c0497bf0749d1f5804c3c0b1da55516893b455f1 to 448b5fa8a7c3820d4e39bff8bef0a18a6826be93
+[33mc0497bf0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature-social-auth[m[33m, [m[1;31morigin/feature-social-auth[m[33m)[m HEAD@{5}: checkout: moving from Version-2 to c0497bf0749d1f5804c3c0b1da55516893b455f1
+[33m448b5fa8[m[33m ([m[1;32mVersion-2[m[33m)[m HEAD@{6}: checkout: moving from 448b5fa8a7c3820d4e39bff8bef0a18a6826be93 to Version-2
+[33m448b5fa8[m[33m ([m[1;32mVersion-2[m[33m)[m HEAD@{7}: checkout: moving from Version-2 to 448b5fa8a7c3820d4e39bff8bef0a18a6826be93
+[33m448b5fa8[m[33m ([m[1;32mVersion-2[m[33m)[m HEAD@{8}: commit: one
+[33meb41163f[m HEAD@{9}: commit (initial): one

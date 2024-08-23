@@ -175,7 +175,7 @@ def google_login(request):
             token = data.get('token')
             
             # Verify the token using Google API
-            id_info = id_token.verify_oauth2_token(token, google_requests.Request(), settings.GOOGLE_CLIENT_ID)
+            id_info = id_token.verify_oauth2_token(token, google_requests.Request(), settings.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY)
 
             # Get user info from token
             email = id_info.get('email')

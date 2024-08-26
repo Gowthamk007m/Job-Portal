@@ -1,8 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import FbLogin from 'react-facebook-login';
+import FacebookLogin from '@greatsumini/react-facebook-login';
 import { GoogleLogin } from '@react-oauth/google';
-import {jwtDecode} from 'jwt-decode';  // Note the correct import
 import facebookLogin from './FaceAuth';
 // import LinkedInLogin from "./LinkedinAuth";
 // import { LinkedIn } from 'react-linkedin-login-oauth2';
@@ -38,12 +37,12 @@ const handleGoogleLoginFailure = (error) => {
 };
 
 function LoginPage(props) { return (
-        <div>
+        <div className='flex gap-4'>
               <GoogleLogin
                     onSuccess={handleGoogleLoginSuccess}
                     onError={handleGoogleLoginFailure}
             />
-            <FbLogin appId='1221914495661734' fields='name,email,picture' callback={responseFacebook} />
+            <FacebookLogin appId='1221914495661734' fields='name,email,picture' onSuccess={responseFacebook} />
           {/* <LinkedIn clientId='86vwq0slixoekm'/> */}
           
         </div>

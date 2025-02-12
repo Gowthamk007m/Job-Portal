@@ -1,0 +1,91 @@
+{% extends 'shared/base.html' %}
+{% block title %}{% block accounts_title %}{% endblock accounts_title %}{% endblock title %}
+
+{% block content %}
+<div class="container pt-5 p-0 mb-5">
+    <div class="row g-0">
+        <!-- Hamburger Menu for Small Screens -->
+        <div class="col-12 d-block d-md-none mb-4">
+            <div class="card rounded border">
+                <div class="card-body">
+                    <button class="btn btn-outline-custom w-100" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-expanded="false" aria-controls="sidebarMenu">
+                        <i class="fa-solid fa-bars"></i> Menu
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Sidebar Menu -->
+        <div class="col-lg-3 col-md-5 mb-4 mb-md-0">
+            <div class="card rounded border collapse d-md-block" id="sidebarMenu">
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item nav-text {% if request.path == '/job-profile/' %}active{% endif %}">
+                            <a href="{% url 'job_profile:job_profile' %}" class="text-decoration-none {% if request.path == '/job-profile/' %}text-color{% endif %}">
+                                <div class="d-flex align-items-center">
+                                    <i class="fa-solid fa-id-card-clip me-2 {% if request.path == '/job-profile/' %}text-color{% endif %}"></i>
+                                    <span>Job Profile</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="list-group-item nav-text">
+                            {% if user.jobportalprofile.is_jobseeker %}
+                            <a href="{% url 'job:create_employee_profile' %}" class="text-decoration-none">
+                                <div class="d-flex align-items-center">
+                                    <i class="bx bx-briefcase-alt me-2"></i>
+                                    <span>Become An Employee</span>
+                                </div>
+                            </a>
+                            {% elif user.jobportalprofile.is_employee %}
+                            <a href="{% url 'job:create_job_seeker_profile' %}" class="text-decoration-none">
+                                <div class="d-flex align-items-center">
+                                    <i class="bx bx-briefcase-alt me-2"></i>
+                                    <span>Become a Job Seeker</span>
+                                </div>
+                            </a>
+                            {% else %}
+                            <a href="{% url 'job:select_profile' %}" class="text-decoration-none">
+                                <div class="d-flex align-items-center">
+                                    <i class="bx bx-briefcase-alt me-2"></i>
+                                    <span>Create Job Profile</span>
+                                </div>
+                            </a>
+                            {% endif %}
+                        </li>
+                        {% if user.jobportalprofile.is_employee %}
+                        <li class="list-group-item nav-text {% if request.path == '/job-profile/job/' %}active{% endif %}">
+                            <a href="{% url "job_profile:job-list" %}" class="text-decoration-none {% if request.path == '/job-profile/job/' %}text-color{% endif %}">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-laptop-code me-2 {% if request.path == '/job-profile/job/' %}text-color{% endif %}"></i>
+                                    <span>Job</span>
+                                </div>
+                            </a>
+                        </li>
+                        {% endif %}
+                        <li class="list-group-item nav-text {% if request.path == '/job-profile/applications/' %}active{% endif %}">
+                            <a href="{% url 'job_profile:job_applications_for_applicants' %}" class="text-decoration-none {% if request.path == '/job-profile/applications/' %}text-color{% endif %}">
+                                <div class="d-flex align-items-center">
+                                    <i class="fa-solid fa-file-invoice me-2 {% if request.path == '/job-profile/applications/' %}text-color{% endif %}"></i>
+                                    <span>Applied Jobs</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="list-group-item nav-text {% if request.path == '/job-profile/saved-job/' %}active{% endif %}">
+                            <a href="{% url 'job_profile:saved-job' %}" class="text-decoration-none {% if request.path == '/job-profile/saved-job/' %}text-color{% endif %}">
+                                <div class="d-flex align-items-center">
+                                    <i class="fa-regular fa-floppy-disk me-2 {% if request.path == '/job-profile/saved-job/' %}text-color{% endif %}"></i>
+                                    <span>Saved Jobs</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-7">
+            {% block accounts_content %}
+                
+            {% endblock accounts_content %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

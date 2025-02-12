@@ -1,0 +1,197 @@
+{% extends "shared/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load custom_filters %}
+{% block title %}Job Portal{% endblock %}
+{% block content %}
+{% include "shared/search_banner.html" %}
+{% if jobs %}
+<div class="card-container bg-white mt-4 mb-5">
+   <div class="row mb-3">
+      <div class="col-12 d-flex justify-content-end align-items-center">
+          <!-- Items per page dropdown -->
+          <form method="GET" class="d-flex align-items-center">
+            {% if search_query %}
+              <input type="hidden" name="q" value="{{ search_query }}">
+            {% endif %}
+            {% if selected_locations %}
+               {% for location in selected_locations %}
+                  <input type="hidden" name="location" value="{{ location }}">
+               {% endfor %}
+            {% endif %}
+              <select id="items-per-page" name="items_per_page" onchange="this.form.submit()" class="form-select form-select-sm custom-items-dropdown">
+                  <option value="1" {% if items_per_page == 1 %}selected{% endif %}>1</option>
+                  <option value="10" {% if items_per_page == 10 %}selected{% endif %}>10</option>
+                  <option value="20" {% if items_per_page == 20 %}selected{% endif %}>20</option>
+              </select>
+          </form>
+          <!-- Filter button -->
+          <button class="btn btn-primary me-3 custom-filter-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilter" aria-controls="offcanvasFilter">
+              Filter
+          </button>
+      </div>
+  </div>
+   <div class="row">
+      <!-- job cards Start -->
+      {% for job_item in jobs %}
+      <div class="col-md-6 mb-4">
+         <div class="card job-card h-100" onclick="window.open('{% url 'job:job-detail' job_item.id %}', '_blank')">
+            <div class="card-body position-relative">
+               <a href="#" class="btn btn-link save-job-btn" 
+                  aria-label="{% if job_item.id in saved_job_ids %}Remove Job{% else %}Save Job{% endif %}" 
+                  data-job-id="{{ job_item.id }}"
+                  data-action="{% if job_item.id in saved_job_ids %}remove{% else %}save{% endif %}">
+                  <i class="{% if job_item.id in saved_job_ids %}fa-solid fa-bookmark{% else %}far fa-bookmark{% endif %}"></i>
+               </a>
+               <h4 class="card-title mb-3">{{ job_item.job_title }}</h4>
+               <h6 class="card-subtitle mb-3 text-muted">
+                  <i class="fa-solid fa-map-marker-alt me-2"></i>{{ job_item.location }}
+               </h6>
+               {% if job_item.salary_from %}
+               <div class="d-flex align-items-center mb-4">
+                  <span class="badge salary-badge">
+                     ₹{{ job_item.salary_from|intcomma }}{% if job_item.salary_to %} - ₹{{ job_item.salary_to|intcomma }}{% endif %}
+                  </span>
+               </div>
+               {% endif %}
+               <p class="card-text position-absolute bottom-0 end-0 pe-3 mb-2">
+                  <small class="text-muted">{{ job_item.created_at|naturaltime }}</small>
+               </p>
+               {% if job_item.id in applied_job_ids %}
+               <a onclick="event.stopPropagation(); alert('You have already applied for the job {{ job_item.job_title }}.');" class="btn btn-apply-now">Applied</a>
+               {% else %}
+               <a href="{% url 'job:job_application_create' job_item.id %}" target="_blank" class="btn btn-apply-now" onclick="event.stopPropagation();">Apply</a>
+               {% endif %}
+            </div>
+         </div>
+      </div>
+      {% endfor %}
+      <!-- job card End -->
+   </div>
+   {% if jobs.has_other_pages %}
+<!-- Pagination -->
+<div class="align-items-center mt-4">
+   <div class="text-center">
+      <p>Showing {{jobs.start_index}} to {{ jobs.end_index }} of {{ jobs.paginator.count }} jobs</p>
+   </div>
+   <ul class="pagination justify-content-center" id="pagination">
+      {% if jobs.has_previous %}
+      <li class="page-item" id="prevPage">
+         <a class="page-link" href="?page={{ jobs.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% for location in selected_locations %}&location={{ location }}{% endfor %}{% if items_per_page %}&items_per_page={{ items_per_page }}{% endif %}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+         </a>
+      </li>
+      {% else %}
+      <li class="page-item" id="prevPage">
+         <a class="page-link" href="javascript:void(0)" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+         </a>
+      </li>
+      {% endif %}
+      {% for page_num in jobs.paginator.page_range %}
+      <li class="page-item count-page {% if jobs.number == page_num %}active{% endif %}">
+         <a class="page-link" href="?page={{ page_num }}{% if search_query %}&q={{ search_query }}{% endif %}{% for location in selected_locations %}&location={{ location }}{% endfor %}{% if items_per_page %}&items_per_page={{ items_per_page }}{% endif %}">{{ page_num }}</a>
+      </li>
+      {% endfor %}
+      {% if jobs.has_next %}
+      <li class="page-item" id="nextPage">
+         <a class="page-link" href="?page={{ jobs.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% for location in selected_locations %}&location={{ location }}{% endfor %}{% if items_per_page %}&items_per_page={{ items_per_page }}{% endif %}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+         </a>
+      </li>
+      {% else %}
+      <li class="page-item" id="nextPage">
+         <a class="page-link" href="javascript:void(0)" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+         </a>
+      </li>
+      {% endif %}
+   </ul>
+</div>
+<!-- End Pagination -->
+{% endif %}
+
+</div>
+{% else %}
+<div class="card mb-4 m-3 shadow-sm">
+   <div class="card-body text-center">
+       <img src="{% static 'users/images/no-jobs-found.png' %}" class="img-fluid mt-3" alt="No Jobs Found">
+       <h1 class="card-title mb-5">No Jobs Found</h1>
+   </div>
+</div>
+
+{% endif %}
+{% include "jobs/savejobajax.html" %}
+
+<!-- Offcanvas element -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasFilter" aria-labelledby="offcanvasFilterLabel">
+   <div class="offcanvas-header">
+       <h5 class="offcanvas-title" id="offcanvasFilterLabel">Filter Jobs</h5>
+       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+   </div>
+   <div class="offcanvas-body">
+       <form method="GET">
+           {% if search_query %}
+               <input type="hidden" name="q" value="{{ search_query }}">
+           {% endif %}
+           <!-- Location filter options -->
+           <div class="mb-3">
+               <label class="form-label">Location</label>
+               <div class="checkbox-container" style="max-height: calc(100vh - 200px); overflow-y: auto;">
+                   <div class="form-check">
+                       <input class="form-check-input" type="checkbox" id="filter-location-all" onchange="toggleAllLocations(this)">
+                       <label class="form-check-label" for="filter-location-all">
+                           All ({{ total_job_count }} jobs)
+                       </label>
+                   </div>
+                   {% for location, count in locations %}
+                       <div class="form-check">
+                           <input class="form-check-input" type="checkbox" name="location" value="{{ location }}" id="filter-location-{{ forloop.counter }}" {% if location in selected_locations %}checked{% endif %} {% if count == 0 %}disabled{% endif %}>
+                           <label class="form-check-label" for="filter-location-{{ forloop.counter }}">
+                               {{ location }} ({{ count }} jobs)
+                           </label>
+                       </div>
+                   {% endfor %}
+               </div>
+           </div>
+           {% if items_per_page %}
+               <input type="hidden" name="items_per_page" value="{{ items_per_page }}">
+           {% endif %}
+           <button type="submit" class="btn btn-custom w-100">Apply Filters</button>
+       </form>
+   </div>
+</div>
+
+<style>
+   .checkbox-container {
+       max-height: calc(100vh - 200px);
+       min-height: calc(100vh - 200px);
+       overflow-y: auto;
+   }
+</style>
+
+<script>
+    function toggleAllLocations(allCheckbox) {
+        const checkboxes = document.querySelectorAll('input[name="location"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = !allCheckbox.checked ? checkbox.checked : false;
+        });
+    }
+
+    // Uncheck the "All" checkbox if any individual location is checked
+    const locationCheckboxes = document.querySelectorAll('input[name="location"]');
+    locationCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            const allCheckbox = document.getElementById('filter-location-all');
+            allCheckbox.checked = Array.from(locationCheckboxes).every(checkbox => !checkbox.checked);
+        });
+    });
+
+    // Check "All" checkbox if no individual locations are selected
+    window.addEventListener('load', () => {
+        const allCheckbox = document.getElementById('filter-location-all');
+        allCheckbox.checked = Array.from(locationCheckboxes).every(checkbox => !checkbox.checked);
+    });
+</script>
+
+{% endblock content %}

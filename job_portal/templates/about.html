@@ -1,0 +1,66 @@
+{% extends "shared/base.html" %}
+{% load static %}
+
+{% block title %}Job Detail{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/job_detail_styles.css' %}">
+{% endblock extra_css %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body position-relative">
+                    <a href="#" class="btn btn-link position-absolute top-0 end-0"><i class="fa-solid fa-flag"></i></a>
+                    <a href="#" class="btn btn-link save-job-icon"><i class="far fa-bookmark"></i></a>
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="ms-3">
+                            <h3 class="card-title">Job Title</h3>
+                            <h6 class="card-subtitle mb-2 text-muted">Company Name</h6>
+                            <p class="card-text company-location">Location, Location Name</p>
+                        </div>
+                    </div>
+                    <div class="mt-3 mb-3 ms-3">
+                        <h6 class="card-subtitle mb-3 text-muted">Salary</h6>
+                        <div class="badge salary-badge">$60k - $80k</div>
+                    </div>
+                    <div class="mt-3 mb-3 ms-3">
+                        <h6 class="card-subtitle mb-3 text-muted">Skills</h6>
+                        <div class="badge salary-badge">Skill 1</div>
+                        <div class="badge salary-badge">Skill 2</div>
+                        <div class="badge salary-badge">Skill 3</div>
+                    </div>
+                    <div class="mt-3 mb-3 ms-3">
+                        <h6 class="card-subtitle mb-3 text-muted">Job Type</h6>
+                        <div class="badge salary-badge">Full-time</div>
+                    </div>
+                    <div class="mt-3 mb-3 ms-3">
+                        <h6 class="card-subtitle mb-3 text-muted">Shift and Schedule</h6>
+                        <div class="badge salary-badge">Day Shift</div>
+                    </div>
+                    <div class="mt-3 mb-3 ms-3">
+                        <h6 class="card-subtitle mb-2 text-muted">Description</h6>
+                        <div>
+                            <p>{% lorem 2 p random %}</p>
+                        </div>
+                    </div>
+                    <div class="mt-3 mb-3 ms-3">
+                        <h6 class="card-subtitle mb-3 text-muted">Requirements</h6>
+                        <div>
+                            <ul class="list-group mb-3">
+                                <li class="list-group-item">Requirement 1</li>
+                                <li class="list-group-item">Requirement 2</li>
+                                <li class="list-group-item">Requirement 3</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="card-text posted-time"><small class="text-muted">Posted 3 Days Ago</small></p>
+                    <a href="#" class="btn btn-apply-now ms-3">Apply Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

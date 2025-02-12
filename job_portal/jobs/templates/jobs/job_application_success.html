@@ -1,0 +1,56 @@
+{% extends 'shared/base.html' %}
+
+{% block title %}Application Submitted{% endblock title %}
+
+{% block content %}
+<div class="modal modal-sheet position-static d-block p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header bg-white p-5 pb-4 justify-content-center border-bottom-0">
+                <h1 class="fw-bold mb-0 fs-2 auth-text">Application Submitted</h1>
+            </div>
+            <p class="text-center p-3">Job Title: {{ application.job.job_title }}</p>
+            <div class="modal-body p-5 pt-0">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Company Name:</label>
+                        <p class="form-control custom-text">{{ application.company_name }}</p>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Designation:</label>
+                        <p class="form-control custom-text">{{ application.designation }}</p>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Salary:</label>
+                        <p class="form-control custom-text">{{ application.salary }}</p>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Last Working Date:</label>
+                        <p class="form-control custom-text">{{ application.last_working_date }}</p>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Quit Reason:</label>
+                        <p class="form-control custom-text">{{ application.quit_reason }}</p>
+                    </div>
+
+                    <a href="{% url 'job:home' %}" class="w-100 mt-3 btn btn-lg rounded-3 btn-custom">Back to Job List</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .custom-text {
+        background-color: #f8f9fa;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+</style>
+{% endblock content %}
+

@@ -1,0 +1,97 @@
+{% extends 'shared/base.html' %}
+
+{% block title %}Sign Up{% endblock title %}
+
+{% block content %}
+<div class="modal modal-sheet position-static d-block p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content rounded-4 shadow">
+        <div class="modal-header bg-white p-5 pb-4 justify-content-center border-bottom-0">
+          <h1 class="fw-bold mb-0 fs-2 auth-text">Sign Up</h1>
+        </div>
+        <p class="text-center p-3">Join us to explore job opportunities and find meaningful connections.</p>
+        <div class="modal-body p-3 pt-0">
+          <form method="post">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-md-6">
+                  <div class="form-floating mb-3">
+                      {{ form.first_name }}
+                      <label for="floatingInput">{{ form.first_name.label }}</label>
+                      <div class="text-danger">
+                          {{ form.first_name.errors.as_p }}
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-floating mb-3">
+                      {{ form.last_name }}
+                      <label for="floatingInput">{{ form.last_name.label }}</label>
+                      <div class="text-danger">
+                          {{ form.last_name.errors.as_p }}
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-floating mb-3">
+                {{ form.username }}
+              <label for="floatingInput">{{ form.username.label }}</label>
+              <div class="text-danger">
+                {% for e in form.username.errors %}
+                        <p class="text-danger">{{ e }}</p>
+                {% endfor %}
+              </div>
+            </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-floating mb-3">
+                {{ form.phone }}
+              <label for="floatingInput">{{ form.phone.label }}</label>
+              <div class="text-danger">
+                {% for e in form.phone.errors %}
+                        <p class="text-danger">{{ e }}</p>
+                {% endfor %}
+              </div>
+            </div>
+            </div>
+        </div>
+            
+            <div class="form-floating mb-3">
+                {{ form.email }}
+              <label for="floatingInput">{{ form.email.label }}</label>
+              <div class="text-danger">
+                {{ form.email.errors.as_p }}
+              </div>
+            </div>
+            
+            <div class="form-floating mb-3">
+                {{ form.password }}
+              <label for="floatingPassword">{{ form.password.label }}</label>
+              {% if form.password.errors %}
+                    {% for e in form.password.errors %}
+                        <p class="text-danger">{{ e }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="form-floating mb-3">
+                {{ form.confirm_password }}
+              <label for="floatingPassword">{{ form.confirm_password.label }}</label>
+              {% if form.confirm_password.errors %}
+                    {% for e in form.confirm_password.errors %}
+                        <p class="text-danger">{{ e }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <button class="w-100 mb-2 btn btn-lg rounded-3 btn-custom" type="submit">Sign Up</button>
+            <div class="text-center mt-4 mb-4">
+                <p class="mb-0">Already have an account? <a href="{% url 'user:login' %}" class="auth-text-color text-decoration-none">Sign In</a></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+    

@@ -1,0 +1,29 @@
+<div class="banner card-container bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 search-input">
+                <form class="d-flex" role="search">
+                    <div class="input-group">
+                        <span class="input-group-text" id="search-icon">
+                            <i class="fa-brands fa-searchengin"></i>
+                        </span>
+                        <input class="form-control form-control-lg" name="q" {% if search_query %}value="{{ search_query }}"{% endif %} type="search" placeholder="Search for jobs" aria-label="Search" aria-describedby="search-icon">
+                        <button class="btn-custom" type="submit"><i class="fa-brands fa-searchengin"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% if search_query %}
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div id="search-results">
+                        <p id="search-query-display">Search results for '<span id="search-query">{{search_query}}</span>':</p>
+                        <p id="job-count-display">{{ jobs.paginator.count }} jobs found</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>

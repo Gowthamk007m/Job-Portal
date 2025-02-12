@@ -1,0 +1,94 @@
+{% extends 'admin_panel/layout/base.html' %}
+{% load static %}
+{% block title %}Add Job{% endblock title %}
+{% block content %}
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+       <div class="row">
+          <div class="col-lg-12">
+                <div class="iq-card">
+                   <div class="iq-card-header d-flex justify-content-between">
+                      <div class="iq-header-title">
+                         <h4 class="card-title">New Job Information</h4>
+                      </div>
+                   </div>
+                   <div class="iq-card-body">
+                      <div class="new-user-info">
+                         <form>
+                            <div class="row">
+                               <div class="form-group col-md-12">
+                                  <label for="fname">Job Title:</label>
+                                  <input type="text" class="form-control" id="fname" placeholder="Job Title" required>
+                               </div>
+                               <div class="form-group col-md-6">
+                                  <label for="lname">Company:</label>
+                                  <select class="form-control" id="selectcountry" style="height: 45px;">
+                                     <option>Select Company</option>
+                                     <option>Company 1</option>
+                                     <option>Company 2</option>
+                                     <option >Company 3</option>
+                                     <option>Company 4</option>
+                                     <option>Company 5</option>
+                                  </select>
+                               </div>
+                               <div class="form-group col-md-6">
+                                  <label for="add1">Location:</label>
+                                  <input type="text" class="form-control" id="add1" placeholder="Street Address 1">
+                               </div>
+                               <div class="form-group  col-md-6">
+                                  <label for="exampleFormControlSelect2">SKill (ctrl + click) to select multiple :</label>
+                                  <input type="text" id="skillSearchInput" class="form-control" placeholder="Search skill...">
+                                  <select multiple="" class="form-control" id="exampleFormControlSelect2">
+                                     <option>Skill-1</option>
+                                     <option>Skill-2</option>
+                                     <option>Skill-3</option>
+                                     <option>Shill-4</option>
+                                     <option>Skill-5</option>
+                                     <option>Skill-6</option>
+                                     <option>Skill-7</option>
+                                     <option>pkill-8</option>
+                                  </select>
+                               </div>
+                               <div class="form-group col-md-6">
+                                  <label for="cname">Shift:</label><br>
+                                  <div class="custom-control custom-checkbox custom-control-inline">
+                                     <input type="checkbox" class="custom-control-input" id="customCheck5">
+                                     <label class="custom-control-label" for="customCheck5">Day Shift:</label>
+                                  </div>
+                                  <div class="custom-control custom-checkbox custom-control-inline">
+                                     <input type="checkbox" class="custom-control-input" id="customCheck4">
+                                     <label class="custom-control-label" for="customCheck4">Night Shift:</label>
+                                  </div>
+                               </div>
+                               <div class="form-group col-md-6">
+                                  <label for="mobno">Salary Min:</label>
+                                  <input type="text" class="form-control" id="mobno" placeholder="Salary Min">
+                               </div>
+                               <div class="form-group col-md-6">
+                                  <label for="altconno">Salary Max:</label>
+                                  <input type="text" class="form-control" id="altconno" placeholder="Salary Max">
+                               </div>
+                               <div class="form-group col-md-12">
+                                  <label for="exampleFormControlTextarea1">Job Description:</label>
+                                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                               </div>
+                               <div class="form-group col-md-12">
+                                  <label for="exampleFormControlTextarea1">Requirements:</label>
+                                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                               </div>
+                            </div>
+                            <div class="checkbox">
+                               <label><input class="mr-2" type="checkbox">Active</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add New Job</button>
+                         </form>
+                      </div>
+                   </div>
+                </div>
+          </div>
+       </div>
+    </div>
+ </div>
+
+
+{% endblock content %}

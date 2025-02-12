@@ -1,0 +1,48 @@
+{% extends 'accounts/shared/accounts_base.html' %}
+
+
+{% block accounts_title %}{% if request.path == '/accounts/experience/create/' %}Add{% else %}Update{% endif %} Experience{% endblock accounts_title %}
+
+
+{% block accounts_content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        {% if request.path == '/accounts/experience/create/' %}
+                        <h1 class="card-title text-center mb-4">Add Experience</h1>
+                        {% else %}
+                        <h1 class="card-title text-center mb-4">Update Experience</h1>
+                        {% endif %}
+                        <form method="post">
+                            {% csrf_token %}
+                            {% include 'components/form_field.html' with field=form.title %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {% include 'components/form_field.html' with field=form.company %}
+                                </div>
+                                <div class="col-md-6">
+                                    {% include 'components/form_field.html' with field=form.location %}
+                                </div>
+                            </div>
+                            {% include 'components/form_field.html' with field=form.description %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {% include 'components/form_field.html' with field=form.start_date %}
+                                </div>
+                                <div class="col-md-6">
+                                    {% include 'components/form_field.html' with field=form.end_date %}
+                                </div>
+                            </div>
+                            <div class="d-grid mt-3 mb-5">
+                                <button type="submit" class="btn btn-custom btn-block">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock accounts_content %}
+    

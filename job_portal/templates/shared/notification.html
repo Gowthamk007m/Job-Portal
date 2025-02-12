@@ -1,0 +1,19 @@
+{% load humanize %}
+{% load static %}
+<div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="notificationModalLabel">Notifications</h5>
+                <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close"><i class="fa-regular fa-circle-xmark"></i></button>
+            </div>
+            <div class="modal-body" style="max-height: 400px;">
+                <div class="d-flex flex-column flex-md-row gap-4 align-items-center justify-content-center h-100">
+                    <div class="list-group w-100 h-100 d-flex align-items-center justify-content-center" id="notificationList">
+                        <!-- Notifications will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+{% extends 'accounts/shared/accounts_base.html' %}
+
+{% block accounts_title %}Education Records{% endblock accounts_title %}
+
+{% block accounts_content %}
+    <div class="container-fluid">
+        <div class="card shadow-lg p-4">
+            <div class="d-flex align-items-center mb-4">
+                <h1 class="flex-grow-1">Education Records</h1>
+                <a href="{% url 'user:education_create' %}" class="btn btn-custom ms-auto">&plus;</a>
+            </div>
+            
+            {% if not data %}
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body text-center">
+                    <h4 class="card-title">No education record found</h4>
+                    <p class="card-text">Please add an education to proceed.</p>
+                    <a href="{% url 'user:education_create' %}" class="btn btn-custom mt-3">&plus; Add Education</a>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% for education in data %}
+                    <div class="col">
+                        <div class="card h-100 border-custom shadow">
+                            <div class="card-header bg-custom text-white">
+                                <h5 class="mb-0">{{ education.degree }} from {{ education.institution }}</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text"><strong>Field of Study:</strong> {{ education.field_of_study }}</p>
+                                <p class="card-text"><strong>Dates:</strong> {{ education.start_date|date:"M Y" }} - {% if education.end_date %}{{ education.end_date|date:"M Y" }}{% else %}Present{% endif %}</p>
+                            </div>
+                            <div class="card-footer bg-light d-flex justify-content-end">
+                                <div class="btn-group">
+                                    <a href="{% url 'user:education_edit' education.pk %}" class="btn btn-outline-custom"><i class="fa-regular fa-pen-to-square"></i></a>
+                                    <a href="{% url 'user:education_delete' education.pk %}" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete this education?');"><i class="fa-regular fa-trash-can"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock accounts_content %}

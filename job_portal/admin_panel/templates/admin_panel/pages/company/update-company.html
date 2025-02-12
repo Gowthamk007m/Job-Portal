@@ -1,0 +1,142 @@
+{% extends "admin_panel/layout/base.html" %}
+{% load static %}
+{% block title %}Update Company{% endblock title %}
+{% block content %}
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Add New Company</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <div class="add-img-user profile-img-edit">
+                                    <img class="profile-pic img-fluid" src="{% static 'admin_panel/assets/images/logo.png' %}" alt="profile-pic">
+                                    <div class="p-image">
+                                        <a href="javascript:void();" class="upload-button btn iq-bg-primary">File Upload</a>
+                                        <input class="file-upload" type="file" accept="image/*" name="profile_pic" value="dummy_image.jpg">
+                                    </div>
+                                </div>
+                                <div class="img-extension mt-3">
+                                    <div class="d-inline-block align-items-center">
+                                        <span>Only</span>
+                                        <a href="javascript:void();">.jpg</a>
+                                        <a href="javascript:void();">.png</a>
+                                        <a href="javascript:void();">.jpeg</a>
+                                        <span>allowed</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Company Sector:</label>
+                                <select class="form-control" name="company_sector" id="selectuserrole" required>
+                                    <option value="">Select</option>
+                                    <option selected>IT Sector</option>
+                                    <option>Finance Sector</option>
+                                    <option>Business</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="furl">Facebook Url:</label>
+                                <input type="text" class="form-control" id="furl" name="facebook_url" placeholder="Facebook Url" value="https://facebook.com/dummy">
+                            </div>
+                            <div class="form-group">
+                                <label for="turl">Twitter Url:</label>
+                                <input type="text" class="form-control" id="turl" name="twitter_url" placeholder="Twitter Url" value="https://twitter.com/dummy">
+                            </div>
+                            <div class="form-group">
+                                <label for="instaurl">Instagram Url:</label>
+                                <input type="text" class="form-control" id="instaurl" name="instagram_url" placeholder="Instagram Url" value="https://instagram.com/dummy">
+                            </div>
+                            <div class="form-group">
+                                <label for="lurl">Linkedin Url:</label>
+                                <input type="text" class="form-control" id="lurl" name="linkedin_url" placeholder="Linkedin Url" value="https://linkedin.com/dummy">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">New Company Information</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <div class="new-user-info">
+                            <form method="post" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="fname">Company Name:</label>
+                                        <input type="text" class="form-control" id="fname" name="company_name" placeholder="Company Name" value="Dummy Company">
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label for="exampleFormControlTextarea1">Overview:</label>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" name="overview" rows="5">This is a dummy company overview.</textarea>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Owner:</label>
+                                        <select class="form-control" name="owner" id="selectowner">
+                                            <option>Select Owner</option>
+                                            <option selected>Aswin</option>
+                                            <option>Anand</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-12">
+                                        <label>Country:</label>
+                                        <select class="form-control" name="country" id="selectcountry">
+                                            <option>Select Country</option>
+                                            <option>Canada</option>
+                                            <option>Noida</option>
+                                            <option selected>USA</option>
+                                            <option>India</option>
+                                            <option>Africa</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="mobno">Mobile Number:</label>
+                                        <input type="text" class="form-control" id="mobno" name="mobile_number" placeholder="Mobile Number" value="1234567890">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="altconno">Alternate Contact:</label>
+                                        <input type="text" class="form-control" id="altconno" name="alternate_contact" placeholder="Alternate Contact" value="0987654321">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="email">Email:</label>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="dummy@example.com">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="pno">Pin Code:</label>
+                                        <input type="text" class="form-control" id="pno" name="pin_code" placeholder="Pin Code" value="123456">
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label for="city">Town/City:</label>
+                                        <input type="text" class="form-control" id="city" name="town_city" placeholder="Town/City" value="Dummy City">
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label for="exampleFormControlTextarea1">Headquarters Location:</label>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" name="hq_location" rows="5">123 Dummy Street, Dummy City</textarea>
+                                    </div>
+                                </div>
+                                <div class="checkbox">
+                                    <label><input class="mr-2" type="checkbox" name="active" checked>Active</label>
+                                </div>
+                                <div class="checkbox">
+                                    <label><input class="mr-2" type="checkbox" name="active">Ban</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Update Company</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

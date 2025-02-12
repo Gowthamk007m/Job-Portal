@@ -1,0 +1,44 @@
+{% extends 'accounts/shared/accounts_base.html' %}
+
+{% block accounts_title %}Skill Records{% endblock accounts_title %}
+
+{% block accounts_content %}
+<div class="container-fluid">
+    <div class="card shadow-lg p-4">
+        <div class="d-flex align-items-center mb-4">
+            <h1 class="flex-grow-1">Skill Records</h1>
+            <a href="{% url 'user:skill_create' %}" class="btn btn-custom ms-auto" title="Add Skill">&plus;</a>
+        </div>
+        
+        {% if not data %}
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body text-center">
+                <h4 class="card-title">No skill records found</h4>
+                <p class="card-text">Please add a skill to proceed.</p>
+                <a href="{% url 'user:skill_create' %}" class="btn btn-custom mt-3" title="Add Skill">&plus; Add Skill</a>
+            </div>
+        </div>
+        {% else %}
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            <div class="col-lg-12 mb-3">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title d-flex justify-content-between align-items-center">
+                            Skills
+                        </h5>
+                        <p class="card-text">
+                            {% for skill in data %}
+                                <span class="badge align-items-center p-2 pe-3 text-success-emphasis bg-success-subtle border border-success-subtle rounded-pill mt-2" style="font-size: medium;">
+                                    <span class="px-1">{{ skill.skill }}</span>
+                                    <a href="{% url 'user:skill_delete' skill.pk %}" onclick="return confirm('Are you sure you want to delete {{ skill.skill }} skill?');"><i class="fa-regular fa-circle-xmark"></i></a>
+                                </span>
+                            {% endfor %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock accounts_content %}

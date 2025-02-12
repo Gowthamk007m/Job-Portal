@@ -1,0 +1,113 @@
+{% extends 'job_profile/shared/accounts_base.html' %}
+
+{% block accounts_title %}Application List{% endblock accounts_title %}
+
+{% block accounts_content %}
+<div class="container-fluid">
+    <div class="card shadow-lg p-4">
+        <div class="d-flex align-items-center mb-4">
+            <h4 class="flex-grow-1">Application List for {{ job.job_title }}</h4>
+            <form method="get" class="ms-auto">
+                <div class="input-group">
+                    <select class="form-select" id="status-filter" name="status">
+                        <option value="" {% if not selected_status %}selected{% endif %}>All</option>
+                        {% for key, value in STATUS_CHOICES %}
+                        <option value="{{ key }}" {% if selected_status == key %}selected{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-outline-custom">Apply</button>
+                </div>
+            </form>
+        </div>
+        
+        {% if not applications %}
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body text-center">
+                <h4 class="card-title">No applications found</h4>
+                <p class="card-text">There are no job applications to display.</p>
+            </div>
+        </div>
+        {% else %}
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for application in applications %}
+            <div class="col-md-12">
+                <div class="card h-100 border-custom shadow">
+                    <div class="card-header bg-custom text-white">
+                        <h5 class="mb-0">{{ application.applicant.user.full_name }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Company:</strong> {{ application.company_name }}</p>
+                        <p><strong>Designation:</strong> {{ application.designation }}</p>
+                        <p><strong>Salary:</strong> {{ application.salary }}</p>
+                        <p><strong>Last Working Date:</strong> {{ application.last_working_date }}</p>
+                        <p><strong>Quit Reason:</strong> {{ application.quit_reason }}</p>
+                        <p><strong>Status:</strong> {{ application.status }}</p>
+                    </div>
+                    <div class="card-footer bg-light d-flex justify-content-between">
+                        {% if application.status != 'Selected' and application.status != 'Rejected' %}
+                        <form method="post" class="ms-auto">
+                            {% csrf_token %}
+                            <input type="hidden" name="application_id" value="{{ application.id }}">
+                            <button type="submit" name="action" value="select" class="btn btn-success btn-sm" title="Select">
+                                <i class="fa-solid fa-check"></i> Select
+                            </button>
+                            <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm" title="Reject">
+                                <i class="fa-solid fa-times"></i> Reject
+                            </button>
+                        </form>
+                        {% elif application.status == 'Selected' or application.status == 'Rejected' %}
+                        <form method="post" class="ms-auto">
+                            {% csrf_token %}
+                            <input type="hidden" name="application_id" value="{{ application.id }}">
+                            <button type="submit" name="action" value="undo" class="btn btn-warning btn-sm" title="Undo">
+                                <i class="fa-solid fa-undo"></i> Undo
+                            </button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- Pagination -->
+        <div class="align-items-center mt-4">
+            <div class="text-center">
+                <p>Showing {{ applications.start_index }} to {{ applications.end_index }} of {{ applications.paginator.count }} applications</p>
+            </div>
+            <ul class="pagination justify-content-center" id="pagination">
+                {% if applications.has_previous %}
+                <li class="page-item" id="prevPage">
+                    <a class="page-link" href="?page={{ applications.previous_page_number }}{% if selected_status %}&status={{ selected_status }}{% endif %}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item" id="prevPage">
+                    <a class="page-link" href="javascript:void(0)" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+                {% for page_num in applications.paginator.page_range %}
+                <li class="page-item count-page {% if applications.number == page_num %}active{% endif %}"><a class="page-link" href="?page={{ page_num }}{% if selected_status %}&status={{ selected_status }}{% endif %}">{{ page_num }}</a></li>
+                {% endfor %}
+                {% if applications.has_next %}
+                <li class="page-item" id="nextPage">
+                    <a class="page-link" href="?page={{ applications.next_page_number }}{% if selected_status %}&status={{ selected_status }}{% endif %}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item" id="nextPage">
+                    <a class="page-link" href="javascript:void(0)" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+        <!-- End Pagination -->
+        {% endif %}
+    </div>
+</div>
+{% endblock accounts_content %}

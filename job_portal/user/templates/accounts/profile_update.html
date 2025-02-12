@@ -1,0 +1,137 @@
+{% extends 'accounts/shared/accounts_base.html' %}
+{% load static %}
+{% block accounts_title %}Edit Profile{% endblock accounts_title %}
+
+{% block accounts_content %}
+    <div class="container-fluid">
+        <div class="card shadow-lg p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="text-center">Edit Profile</h1>
+                <a href="{% url 'user:profile_view' %}" class="btn btn-custom ms-auto">Back</a>
+            </div>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="profile_photo">Profile Photo</label>
+                    <div>
+                        {% if user.profile_photo %}
+                        <img id="profile-photo-preview" src="{{ user.profile_photo.url }}" alt="Profile Photo" class="img-fluid img-thumbnail" style="max-width: 200px;">
+                        {% else %}
+                        <img id="profile-photo-preview" src="{% static 'users/images/default-avatar.jpg' %}" alt="Profile Photo" class="img-fluid img-thumbnail" style="max-width: 200px;">
+                        {% endif %}
+                    </div>
+                    <div class="d-none">
+                        {% include 'components/form_field.html' with field=form.profile_photo %}
+                    </div>
+                    <button type="button" class="btn btn-custom mt-2" id="change-photo-btn">Change Photo</button>
+                    <button type="button" class="btn btn-danger mt-2 d-none" id="remove-photo-btn"><i class="fa-solid fa-delete-left"></i></button>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        {% include 'components/form_field.html' with field=form.first_name %}
+                    </div>
+                    <div class="col-md-4">
+                        {% include 'components/form_field.html' with field=form.last_name %}
+                    </div>
+                    <div class="col-md-4">
+                        {% include 'components/form_field.html' with field=form.username %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        {% include 'components/form_field.html' with field=form.email %}
+                    </div>
+                    <div class="col-md-4">
+                        {% include 'components/form_field.html' with field=form.phone %}
+                    </div>
+                    <div class="col-md-4">
+                        {% include 'components/form_field.html' with field=form.dob %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        {% include 'components/form_field.html' with field=form.short_reel %}
+                    </div>
+                    <div class="col-md-6">
+                        {% include 'components/form_field.html' with field=form.qualification %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        {% include 'components/form_field.html' with field=form.smoking_habit %}
+                    </div>
+                    <div class="col-md-6">
+                        {% include 'components/form_field.html' with field=form.drinking_habit %}
+                    </div>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" id="submit-button" class="btn btn-custom mt-4">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.getElementById('change-photo-btn').addEventListener('click', function() {
+            const input = document.getElementById('id_profile_photo');
+            input.classList.remove('d-none');
+            input.click();
+            input.addEventListener('change', function(event) {
+                const [file] = this.files;
+                if (file) {
+                    document.getElementById('profile-photo-preview').src = URL.createObjectURL(file);
+                    document.getElementById('remove-photo-btn').classList.remove('d-none');
+                }
+                input.classList.add('d-none');
+            });
+        });
+
+        document.getElementById('remove-photo-btn').addEventListener('click', function() {
+            const input = document.getElementById('id_profile_photo');
+            const preview = document.getElementById('profile-photo-preview');
+            input.value = '';
+            {% if user.profile_photo %}
+            preview.src = "{{ user.profile_photo.url }}";
+            {% else %}
+            preview.src = "{% static 'users/images/default-avatar.jpg' %}";
+            {% endif %}
+            
+            document.getElementById('remove-photo-btn').classList.add('d-none');
+        });
+
+        document.getElementById('id_dob').addEventListener('input', function() {
+            const dob = new Date(this.value);
+            const age = calculateAge(dob);
+            const errorElementId = 'age-error';
+            let errorElement = document.getElementById(errorElementId);
+            const submitButton = document.getElementById('submit-button');
+    
+            if (age < 18) {
+                if (!errorElement) {
+                    errorElement = document.createElement('p');
+                    errorElement.id = errorElementId;
+                    errorElement.className = 'text-danger';
+                    errorElement.innerText = 'You must be at least 18 years old.';
+                    this.parentElement.appendChild(errorElement);
+                }
+                submitButton.disabled = true;
+            } else {
+                if (errorElement) {
+                    errorElement.remove();
+                }
+                submitButton.disabled = false;
+            }
+        });
+    
+        function calculateAge(dob) {
+            const today = new Date();
+            let age = today.getFullYear() - dob.getFullYear();
+            const monthDifference = today.getMonth() - dob.getMonth();
+    
+            if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < dob.getDate())) {
+                age--;
+            }
+    
+            return age;
+        }
+    </script>
+{% endblock accounts_content %}

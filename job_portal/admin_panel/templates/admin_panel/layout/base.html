@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Job Portal - {% block title %}{% endblock title %}</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static "admin_panel/assets/images/logo.png" %}" />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="{% static 'admin_panel/assets/css/bootstrap.min.css' %}"
+    />
+    <!-- Chart list Js -->
+    <link
+      rel="stylesheet"
+      href="{% static 'admin_panel/assets/js/chartist/chartist.min.css' %}"
+    />
+    <!-- Typography CSS -->
+    <link
+      rel="stylesheet"
+      href="{% static 'admin_panel/assets/css/typography.css' %}"
+    />
+    <!-- Style CSS -->
+    <link
+      rel="stylesheet"
+      href="{% static 'admin_panel/assets/css/style.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'admin_panel/assets/css/custom.css' %}"
+    />
+    <!-- Responsive CSS -->
+    <link
+      rel="stylesheet"
+      href="{% static 'admin_panel/assets/css/responsive.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- loader Start -->
+    <div id="loading">
+      <div id="loading-center"></div>
+    </div>
+    <!-- loader END -->
+    <!-- Wrapper Start -->
+    <div class="wrapper">
+      {% include "admin_panel/partials/sidebar.html" %}
+      {% include "admin_panel/partials/top-navbar.html" %} 
+      {% block content %} {% endblock content %}
+    </div>
+    <!-- Wrapper END -->
+    <!-- Footer -->
+    <footer class="iq-footer">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-6">
+            <ul class="list-inline mb-0">
+              <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+              <li class="list-inline-item"><a href="#">Terms of Use</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-6 text-right">
+            Copyright <span id="currentYear"></span>
+            <a href="/" target="_blank">Job Seaker</a> All Rights Reserved.
+          </div>
+        </div>
+      </div>
+    </footer>
+
+
+    <!-- Footer END -->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{% static 'admin_panel/assets/js/jquery.min.js' %}"></script>
+    <!-- Rtl and Darkmode -->
+    <script src="{% static 'admin_panel/assets/js/rtl.js' %}"></script>
+    <script src="{% static 'admin_panel/assets/js/customizer.js' %}"></script>
+    <script src="{% static 'admin_panel/assets/js/popper.min.js' %}"></script>
+    <script src="{% static 'admin_panel/assets/js/bootstrap.min.js' %}"></script>
+    <!-- Appear JavaScript -->
+    <script src="{% static 'admin_panel/assets/js/jquery.appear.js' %}"></script>
+    <!-- Countdown JavaScript -->
+    <script src="{% static 'admin_panel/assets/js/countdown.min.js' %}"></script>
+    <!-- Counterup JavaScript -->
+    <script src="{% static 'admin_panel/assets/js/waypoints.min.js' %}"></script>
+    <script src="{% static 'admin_panel/assets/js/jquery.counterup.min.js' %}"></script>
+    <!-- Wow JavaScript -->
+    <script src="{% static 'admin_panel/assets/js/wow.min.js' %}"></script>
+    <!-- Apexcharts JavaScript -->
+    <script src="{% static 'admin_panel/assets/js/apexcharts.js' %}"></script>
+    <!-- Slick JavaScript -->
+    <script src="{% static 'admin_panel/assets/js/slick.min.js' %}"></script>
+    <!-- Select2 JavaScript -->
+    <script src="{% static 'admin_panel/assets/js/select2.min.js' %}"></script>
+    <!-- Owl Carousel JavaScript -->
+    <script src="{% static 'admin_panel/assets/js/owl.carousel.min.js' %}"></script>
+    <!-- Magnific Popup JavaScript -->
+    <script src="{% static 'admin_panel/assets/js/jquery.magnific-popup.min.js' %}"></script>
+    <!-- Smooth Scrollbar JavaScript -->
+    <script src="{% static 'admin_panel/assets/js/smooth-scrollbar.js' %}"></script>
+    <!-- lottie JavaScript -->
+    <script src="{% static 'admin_panel/assets/js/lottie.js' %}"></script>
+    <!-- am core JavaScript -->
+    <script src="{% static 'admin_panel/assets/js/core.js' %}"></script>
+    <!-- am charts JavaScript -->
+    <script src="{% static 'admin_panel/assets/js/charts.js' %}"></script>
+    <!-- am animated JavaScript -->
+    <script src="{% static 'admin_panel/assets/js/animated.js' %}"></script>
+    <!-- am kelly JavaScript -->
+    <script src="{% static 'admin_panel/assets/js/kelly.js' %}"></script>
+    <!-- Morris JavaScript -->
+    <script src="{% static 'admin_panel/assets/js/morris.js' %}"></script>
+    <!-- am maps JavaScript -->
+    <script src="{% static 'admin_panel/assets/js/maps.js' %}"></script>
+    <!-- am worldLow JavaScript -->
+    <script src="{% static 'admin_panel/assets/js/worldLow.js' %}"></script>
+    <!-- ChartList Js -->
+    <script src="{% static 'admin_panel/assets/js/chartist/chartist.min.js' %}"></script>
+    <!-- Chart Custom JavaScript -->
+    <script src="{% static 'admin_panel/assets/js/chart-custom.js' %}"></script>
+    <!-- Custom JavaScript -->
+    <script src="{% static 'admin_panel/assets/js/custom.js' %}"></script>
+
+    <!-- jQuery (required for Select2) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Select2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
+  </body>
+</html>

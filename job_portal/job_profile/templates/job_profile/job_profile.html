@@ -1,0 +1,71 @@
+{% extends 'job_profile/shared/accounts_base.html' %}
+{% load static %}
+{% block accounts_title %}Profile{% endblock accounts_title %}
+{% block accounts_content %}
+<div class="container-fluid">
+  <div class="card shadow-lg p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="text-center">Job Profile</h1>
+      <div class="ms-auto">
+        {% if user.jobportalprofile.is_jobseeker %}
+        <a href="{% url 'job:create_job_seeker_profile' %}" class="btn btn-custom">Edit</a>
+        {% else %}
+        <a href="{% url 'job:create_employee_profile' %}" class="btn btn-custom">Edit</a>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row g-0">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row justify-content-center">
+              {% if user.jobportalprofile.title %}
+              <div class="col-lg-6 col-md-6 mt-3 mb-3  d-flex">
+                <div class="card w-100">
+                  <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">Title</h5>
+                    <p class="card-text flex-grow-1">{{ user.jobportalprofile.title }}</p>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+              {% if user.jobportalprofile.expertise_level %}
+              <div class="col-lg-6 mt-3 mb-3 col-md-6 d-flex">
+                <div class="card w-100">
+                  <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">Expertise Level</h5>
+                    <p class="card-text flex-grow-1">{{ user.jobportalprofile.expertise_level }}</p>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+              {% if user.jobportalprofile.company %}
+              <div class="col-lg-6 mt-3 mb-3 col-md-6 d-flex">
+                <div class="card w-100">
+                  <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">Company</h5>
+                    <p class="card-text flex-grow-1">{{ user.jobportalprofile.company }}</p>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+              {% if user.jobportalprofile.location %}
+              <div class="col-lg-6 mt-3 mb-3 col-md-6 d-flex">
+                <div class="card w-100">
+                  <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">Location</h5>
+                    <p class="card-text flex-grow-1">
+                      {{ user.jobportalprofile.location }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock accounts_content %}

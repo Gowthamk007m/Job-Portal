@@ -1,0 +1,47 @@
+{% extends 'accounts/shared/accounts_base.html' %}
+
+{% block accounts_title %}Experience Records{% endblock accounts_title %}
+
+{% block accounts_content %}
+    <div class="container-fluid">
+        <div class="card shadow-lg p-4">
+            <div class="d-flex align-items-center mb-4">
+                <h1 class="flex-grow-1">Experience Records</h1>
+                <a href="{% url 'user:experience_create' %}" class="btn btn-custom ms-auto">&plus;</a>
+            </div>
+            
+            {% if not data %}
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body text-center">
+                    <h4 class="card-title">No experience record found</h4>
+                    <p class="card-text">Please add an experience to proceed.</p>
+                    <a href="{% url 'user:experience_create' %}" class="btn btn-custom mt-3">&plus; Add Experience</a>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="row row-cols-1 row-cols-md-12 g-4">
+                {% for experience in data %}
+                    <div class="col">
+                        <div class="card h-100 border-custom shadow">
+                            <div class="card-header bg-custom text-white">
+                                <h5 class="mb-0">{{ experience.title }} at {{ experience.company }}</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text"><strong>Location:</strong> {{ experience.location }}</p>
+                                <p class="card-text"><strong>Dates:</strong> {{ experience.start_date|date:"M Y" }} - {% if experience.end_date %}{{ experience.end_date|date:"M Y" }}{% else %}Present{% endif %}</p>
+                                <p class="card-text">{{ experience.description }}</p>
+                            </div>
+                            <div class="card-footer bg-light d-flex justify-content-end">
+                                <div class="btn-group">
+                                    <a href="{% url 'user:experience_edit' experience.pk %}" class="btn btn-outline-custom"><i class="fa-regular fa-pen-to-square"></i></a>
+                                    <a href="{% url 'user:experience_delete' experience.pk %}" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete this experience?');"><i class="fa-regular fa-trash-can"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock accounts_content %}

@@ -1,0 +1,70 @@
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.save-job-btn').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+    
+                const jobId = button.getAttribute('data-job-id');
+                const action = button.getAttribute('data-action');
+    
+                if (action === 'save') {
+                    toggleJobAction(jobId, 'save', button);
+                } else if (action === 'remove') {
+                    toggleJobAction(jobId, 'remove', button);
+                } else {
+                    alert('Invalid action.');
+                    return;
+                }
+            });
+        });
+    
+        // Listen for storage events to synchronize across tabs
+        window.addEventListener('storage', function(event) {
+            if (event.key === 'jobAction') {
+                const data = JSON.parse(event.newValue);
+                const jobId = data.jobId;
+                const action = data.action;
+    
+                const button = document.querySelector(`.save-job-btn[data-job-id="${jobId}"]`);
+                if (button) {
+                    updateButtonState(button, action);
+                }
+            }
+        });
+    });
+    
+    function toggleJobAction(jobId, action, button) {
+        const url = `{% url "job:save_remove_job" %}?action=${action}&job_id=${jobId}`;
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function(response) {
+                if (response.status === 'success') {
+                    const newAction = action === 'save' ? 'remove' : 'save';
+                    updateButtonState(button, newAction);
+                    // Notify other tabs about the change
+                    localStorage.setItem('jobAction', JSON.stringify({ jobId: jobId, action: newAction }));
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                alert(`Error occurred while ${action} job: ${jobId}. Status: ${status}, Error: ${error}`);
+            }
+        });
+    }
+    
+    function updateButtonState(button, newAction) {
+        if (newAction === 'save') {
+            button.setAttribute('data-action', 'save');
+            button.setAttribute('aria-label', 'Save Job');
+            button.querySelector('i').className = 'far fa-bookmark';
+        } else if (newAction === 'remove') {
+            button.setAttribute('data-action', 'remove');
+            button.setAttribute('aria-label', 'Remove Job');
+            button.querySelector('i').className = 'fa-solid fa-bookmark';
+        }
+    }
+    
+ </script>

@@ -1,0 +1,34 @@
+{% extends 'shared/base.html' %}
+
+{% block title %}Select Profile{% endblock title %}
+
+{% block content %}
+<div class="modal modal-sheet position-static d-block p-4 py-md-5" tabindex="-1" role="dialog" id="modalSelectProfile">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header p-5 pb-4 justify-content-center border-bottom-0">
+                <h1 class="fw-bold mb-0 fs-2 auth-text">Select Profile</h1>
+            </div>
+            <div class="modal-body mt-5 p-5 pt-0">
+                <form id="profileForm" method="get">
+                    <div class="text-center mb-5">
+                        <a href="#" id="jobseekerLink" class="btn btn-outline-custom btn-lg" style="width: 80%;" data-profile="jobseeker">
+                            Jobseeker
+                        </a>
+                        <input type="radio" id="jobseekerRadio" name="type" value="jobseeker" class="d-none">
+                    </div>
+                    <div class="text-center mb-5">
+                        <a href="#" id="employerLink" class="btn btn-outline-custom btn-lg" style="width: 80%;" data-profile="employer">
+                            Employee
+                        </a>
+                        <input type="radio" id="employerRadio" name="type" value="employer" class="d-none">
+                    </div>
+                    <div class="text-center mb-5">
+                        <button id="continueBtn" type="button" class="btn btn-black btn-lg" style="width: 80%;">Continue</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

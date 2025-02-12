@@ -1,0 +1,61 @@
+{% extends 'accounts/shared/accounts_base.html' %}
+
+{% block accounts_title %}Address List{% endblock accounts_title %}
+
+{% block accounts_content %}
+    <div class="container-fluid">
+        <div class="card shadow-lg p-4">
+            <div class="d-flex align-items-center mb-4">
+                <h1 class="flex-grow-1">Address List</h1>
+                <div class="ms-auto mb-3 mb-md-0">
+                    <a href="{% url 'user:address_create' %}" class="btn btn-custom d-block d-md-inline">&plus;</a>
+                </div>
+            </div>
+            
+            {% if not data %}
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body text-center">
+                    <h4 class="card-title">No addresses found</h4>
+                    <p class="card-text">Please add an address to proceed.</p>
+                    <a href="{% url 'user:address_create' %}" class="btn btn-custom mt-3">&plus; Add Address</a>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% for address in data %}
+                    <div class="col">
+                        <div class="card h-100 border-custom shadow">
+                            <div class="card-header bg-custom text-white">
+                                <h5 class="mb-0">{{ address.name }} {% if address.is_default %}<span class="badge salary-badge">Default</span>{% endif %}</h5>
+                            </div>
+                            <div class="card-body">
+                                <address>
+                                    {{ address.address_line_1 }}<br>
+                                    {% if address.address_line_2 %}
+                                        {{ address.address_line_2 }}<br>
+                                    {% endif %}
+                                    {% if address.address_line_3 %}
+                                        {{ address.address_line_3 }}<br>
+                                    {% endif %}
+                                    {{ address.city }}, {{ address.state }} - {{ address.pincode }}<br>
+                                    {{ address.country }}<br>
+                                </address>
+                                <p><strong>Phone:</strong> {{ address.phone }}</p>
+                            </div>
+                            <div class="card-footer bg-light d-flex justify-content-between">
+                                <div class="btn-group ms-auto">
+                                    {% if not address.is_default %}
+                                        <a href="{% url 'user:set_default_address' pk=address.pk %}" class="btn btn-outline-custom">Set Default</a>
+                                    {% endif %}
+                                    <a href="{% url 'user:address_update' id=address.id %}" class="btn btn-outline-custom"><i class="fa-regular fa-pen-to-square"></i></a>
+                                    <a href="{% url 'user:address_delete' id=address.id %}" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete this address?');"><i class="fa-regular fa-trash-can"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock accounts_content %}

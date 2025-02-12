@@ -1,0 +1,48 @@
+{% load static %}
+<!-- Sidebar  -->
+<div class="iq-sidebar sidebar-dark-blue">
+   <div class="iq-sidebar-logo d-flex justify-content-between">
+      <a href="{% url "admin-d:home" %}">
+      <div class="iq-light-logo">
+         <img src="{% static 'admin_panel/assets/images/logo.png' %}" class="img-fluid" alt="">
+      </div>
+      <div class="iq-dark-logo">
+         <img src="{% static 'admin_panel/assets/images/logo-dark.gif' %}" class="img-fluid" alt="">
+      </div>
+      <span style="font-size: 25px; text-transform: capitalize; color: white;">Job Seaker</span>
+      </a>
+      <div class="iq-menu-bt-sidebar">
+            <div class="iq-menu-bt align-self-center">
+               <div class="wrapper-menu" style="color: white;">
+                  <div class="main-circle"><i class="ri-arrow-right-s-line"></i></div>
+                  <div class="hover-circle"><i class="ri-arrow-left-s-line"></i></div>
+               </div>
+            </div>
+         </div>
+   </div>
+   <div id="sidebar-scrollbar">
+      <nav class="iq-sidebar-menu">
+         <ul id="iq-sidebar-toggle" class="iq-menu">
+            <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>&nbsp;Home</span></li>
+            <li {% if request.path == '/administrator/' %}class="active"{% endif %}><a href="{% url "admin-d:home" %}" class="iq-waves-effect"><i class="ri-home-4-line"></i><span>&nbsp;Dashboard</span></a></li>
+            <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>User</span></li>
+            <li {% if request.path == '/administrator/user/' %}class="active"{% endif %}><a href="{% url "admin-d:userslist" %}" class="iq-waves-effect" aria-expanded="false"><i class="fa-solid fa-users"></i><span>&nbsp;Users</span></a></li>
+            <li {% if request.path == '/administrator/user/create/' %}class="active"{% endif %}><a href="{% url "admin-d:useradd" %}" class="iq-waves-effect" aria-expanded="false"><i class="fa-solid fa-user-plus"></i><span>&nbsp;Add User</span></a></li>
+            <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>&nbsp;Company</span></li>
+            <li {% if request.path == '/administrator/company/' %}class="active"{% endif %}><a href="{% url "admin-d:companylist" %}" class="iq-waves-effect" aria-expanded="false"><i class="fa-regular fa-building"></i><span>&nbsp;Companies</span></a></li>
+            <li {% if request.path == '/administrator/company/create/' %}class="active"{% endif %}><a href="{% url "admin-d:companycreate" %}" class="iq-waves-effect" aria-expanded="false"><i class="fa-solid fa-building-circle-arrow-right"></i><span>&nbsp;Add Company</span></a></li>
+            <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>&nbsp;Jobs</span></li>
+            <li {% if request.path == '/administrator/job/' %}class="active"{% endif %}><a href="{% url "admin-d:job-list" %}" class="iq-waves-effect"><i class="fa-solid fa-briefcase"></i><span>&nbsp;Job List</span></a></li>
+            <li {% if request.path == '/administrator/job/create/' %}class="active"{% endif %}><a href="{% url "admin-d:job-create" %}" class="iq-waves-effect"><i class="fa-solid fa-plus"></i><span>&nbsp;Add Job</span></a></li>
+            <!-- <li>
+               <a href="#userinfo" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false"><i class="ri-user-line"></i><span>Subscriptions</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+               <ul id="userinfo" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                  <li><a href="#"><i class="ri-profile-line"></i>Subscribed Users</a></li>
+               </ul>
+            </li> -->
+            <!-- <li><a href="#" class="iq-waves-effect"><i class="ri-message-line"></i><span>Chat</span></a></li> -->
+         </ul>
+      </nav>
+      <div class="p-3"></div>
+   </div>
+</div>

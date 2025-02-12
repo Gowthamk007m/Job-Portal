@@ -1,0 +1,90 @@
+{% extends 'admin_panel/layout/base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock title %}
+{% block content %}
+
+<div id="content-page" class="content-page">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-sm-6 col-md-6 col-lg-3">
+            <div class="iq-card iq-card-block iq-card-stretch">
+                <div class="iq-card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h2 class="count" data-target="1,100">0</h2>
+                            <p class="fontsize-sm m-0">Users</p>
+                        </div>
+                        <div class="rounded-circle iq-card-icon dark-icon-light iq-bg-primary"><i class="ri-user-line"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-3">
+            <div class="iq-card iq-card-block iq-card-stretch">
+                <div class="iq-card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h2 class="count" data-target="32">0</h2>
+                            <p class="fontsize-sm m-0">Employers</p>
+                        </div>
+                        <div class="rounded-circle iq-card-icon iq-bg-warning"><i class="fa-regular fa-building"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-3">
+            <div class="iq-card iq-card-block iq-card-stretch">
+                <div class="iq-card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h2 class="count" data-target="47">0</h2>
+                            <p class="fontsize-sm m-0">Open Jobs</p>
+                        </div>
+                        <div class="rounded-circle iq-card-icon iq-bg-info"><i class="fa-solid fa-money-bill"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="col-sm-6 col-md-6 col-lg-3">
+            <div class="iq-card iq-card-block iq-card-stretch ">
+               <div class="iq-card-body">
+                  <div class="d-flex d-flex align-items-center justify-content-between">
+                     <div>
+                         <h2>₹<span class="count" data-target="32540800">0</span></h2>
+                         <p class="fontsize-sm m-0">Revenue</p>
+                     </div>
+                     <div class="rounded-circle iq-card-icon iq-bg-danger"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-md-6 col-lg-7">
+            <div class="iq-card">
+               <div class="iq-card-header d-flex justify-content-between">
+                  <div class="iq-header-title">
+                     <h4 class="card-title">Line Area Chart</h4>
+                  </div>
+               </div>
+               <div class="iq-card-body">
+                  <div id="apex-line-area"></div>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-6 col-lg-5">
+            <div class="iq-card iq-card-block iq-card-stretch iq-card-height" style="background: transparent;">
+               <div class="iq-card-body rounded p-0" style="background: url({% static 'admin_panel/assets/images/page-img/01.png' %}) no-repeat;    background-size: cover; height: 465px;">
+                 <div class="iq-caption">
+                    <h1 class="count" data-target="500">0</h1>
+                    <p>Tickets</p>
+                 </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- Wrapper End-->
+{% endblock content %}

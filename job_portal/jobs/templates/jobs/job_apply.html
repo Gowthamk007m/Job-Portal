@@ -1,0 +1,63 @@
+{% extends 'shared/base.html' %}
+
+{% block title %}Apply for Job{% endblock title %}
+
+{% block content %}
+<div class="modal modal-sheet position-static d-block p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content rounded-4 shadow">
+        <div class="modal-header bg-white p-5 pb-4 justify-content-center border-bottom-0">
+          <h1 class="fw-bold mb-0 fs-2 auth-text">Apply for Job</h1>
+        </div>
+        <p class="text-center p-3">Job Title: {{ job.job_title }}</p>
+        <div class="modal-body p-5 pt-0">
+          <form method="post">
+            {% csrf_token %}
+            
+            <div class="form-floating mb-3">
+              {{ form.company_name }}
+              <label for="id_company_name">{{ form.company_name.label }}</label>
+              <div class="text-danger">
+                {{ form.company_name.errors.as_ul }}
+              </div>
+            </div>
+            
+            <div class="form-floating mb-3">
+              {{ form.designation }}
+              <label for="id_designation">{{ form.designation.label }}</label>
+              <div class="text-danger">
+                {{ form.designation.errors.as_ul }}
+              </div>
+            </div>
+            
+            <div class="form-floating mb-3">
+              {{ form.salary }}
+              <label for="id_salary">{{ form.salary.label }}</label>
+              <div class="text-danger">
+                {{ form.salary.errors.as_ul }}
+              </div>
+            </div>
+            
+            <div class="form-floating mb-3">
+              {{ form.last_working_date }}
+              <label for="id_last_working_date">{{ form.last_working_date.label }}</label>
+              <div class="text-danger">
+                {{ form.last_working_date.errors.as_ul }}
+              </div>
+            </div>
+            
+            <div class="form-floating mb-3">
+              {{ form.quit_reason }}
+              <label for="id_quit_reason">{{ form.quit_reason.label }}</label>
+              <div class="text-danger">
+                {{ form.quit_reason.errors.as_ul }}
+              </div>
+            </div>
+
+            <button class="w-100 mb-2 btn btn-lg rounded-3 btn-custom" type="submit">Submit Application</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

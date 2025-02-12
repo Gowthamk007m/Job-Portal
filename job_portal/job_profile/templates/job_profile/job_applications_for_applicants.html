@@ -1,0 +1,92 @@
+{% extends 'job_profile/shared/accounts_base.html' %}
+{% load humanize %}
+
+{% block accounts_title %}Application List{% endblock accounts_title %}
+
+{% block accounts_content %}
+<div class="container-fluid">
+    <div class="card shadow-lg p-4">
+        <div class="d-flex align-items-center mb-4">
+            <h4 class="flex-grow-1">Application List</h4>
+            <form method="get" class="ms-auto">
+                <div class="input-group">
+                    <select class="form-select" id="status-filter" name="status">
+                        <option value="" {% if not selected_status %}selected{% endif %}>All</option>
+                        {% for key, value in STATUS_CHOICES %}
+                        <option value="{{ key }}" {% if selected_status == key %}selected{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-outline-custom">Apply</button>
+                </div>
+            </form>
+        </div>
+        
+        {% if not applications %}
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body text-center">
+                <h4 class="card-title">No applications found</h4>
+                <p class="card-text">There are no job applications to display.</p>
+            </div>
+        </div>
+        {% else %}
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for application in applications %}
+            <div class="col-md-12">
+                <div class="card h-100 border-custom shadow">
+                    <div class="card-body">
+                        <p><strong>Job Title:</strong> {{ application.job }}</p>
+                        <p><strong>Salary:</strong> <span class="badge salary-badge">₹{{ application.job.salary_from|intcomma }}{% if application.job.salary_to %} - ₹{{ application.job.salary_to|intcomma }}{% endif %}</span></p>
+                        <p><strong>Location:</strong> {{ application.job.location }}</p>
+                        <p><strong>Status:</strong> {{ application.status }}</p>
+                        <form action="" method="post" onsubmit="return confirm('Are you sure you want to delete this application?');">
+                            {% csrf_token %}
+                            <input type="hidden" name="application_id" value="{{ application.pk }}">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- Pagination -->
+        <div class="align-items-center mt-4">
+            <div class="text-center">
+                <p>Showing {{ applications.start_index }} to {{ applications.end_index }} of {{ applications.paginator.count }} applications</p>
+            </div>
+            <ul class="pagination justify-content-center" id="pagination">
+                {% if applications.has_previous %}
+                <li class="page-item" id="prevPage">
+                    <a class="page-link" href="?page={{ applications.previous_page_number }}{% if selected_status %}&status={{ selected_status }}{% endif %}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item" id="prevPage">
+                    <a class="page-link" href="javascript:void(0)" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+                {% for page_num in applications.paginator.page_range %}
+                <li class="page-item count-page {% if applications.number == page_num %}active{% endif %}"><a class="page-link" href="?page={{ page_num }}{% if selected_status %}&status={{ selected_status }}{% endif %}">{{ page_num }}</a></li>
+                {% endfor %}
+                {% if applications.has_next %}
+                <li class="page-item" id="nextPage">
+                    <a class="page-link" href="?page={{ applications.next_page_number }}{% if selected_status %}&status={{ selected_status }}{% endif %}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item" id="nextPage">
+                    <a class="page-link" href="javascript:void(0)" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+        <!-- End Pagination -->
+        {% endif %}
+    </div>
+</div>
+{% endblock accounts_content %}

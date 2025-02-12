@@ -1,0 +1,55 @@
+{% extends 'job_profile/shared/accounts_base.html' %}
+{% load humanize %}
+
+{% block accounts_title %}Job List{% endblock accounts_title %}
+
+{% block accounts_content %}
+<div class="container-fluid">
+    <div class="card shadow-lg p-4">
+        <div class="d-flex align-items-center mb-4">
+            <h1 class="flex-grow-1">Job List</h1>
+            <a href="{% url 'job_profile:job-create' %}" class="btn btn-custom ms-auto" title="Add Skill">&plus;</a>
+        </div>
+        
+        {% if not data %}
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body text-center">
+                <h4 class="card-title">No Job found</h4>
+                <p class="card-text">Please add a Job to proceed.</p>
+                <a href="{% url 'job_profile:job-create' %}" class="btn btn-custom mt-3" title="Add Skill">&plus; Add Job</a>
+            </div>
+        </div>
+        {% else %}
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for job in data %}
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body position-relative">
+                        <div class="d-flex justify-content-end">
+                            <div class="btn-group">
+                                <a href="{% url "job_profile:job-detail" job.id %}" class="btn btn-outline-custom btn-sm" title="View"><i class="fa-solid fa-eye"></i></a>
+                                <a href="{% url 'job_profile:job-update' job.id %}" class="btn btn-outline-custom btn-sm" title="Edit"><i class="fa-solid fa-edit"></i></a>
+                                <a href="{% url 'job_profile:job-delete' job.id %}" class="btn btn-outline-danger btn-sm" title="Delete" onclick="return confirm('Are you sure you want to delete this Job?');"><i class="fa-solid fa-trash"></i></a>
+                            </div>
+                        </div>
+                        <h4 class="card-title">{{ job.job_title }}</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ job.user.company }}</h6>
+                        <p class="card-text company-location">{{ job.location }}</p>
+                        {% if job.salary_from %}
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="badge salary-badge">₹{{ job.salary_from|intcomma }}{% if job.salary_to %} - ₹{{ job.salary_to|intcomma }}{% endif %}</span>
+                        </div>
+                        {% endif %}
+                        <p class="card-text position-absolute bottom-0 end-0 pe-3 mb-2">
+                            <small class="text-muted">{{ job.created_at|naturaltime }}</small>
+                        </p>
+                        <a href="{% url "job_profile:application-list" job.id %}" target="_blank" class="btn btn-apply-now">View Application</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock accounts_content %}

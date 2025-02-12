@@ -1,0 +1,56 @@
+{% extends 'job_profile/shared/accounts_base.html' %}
+{% load humanize %}
+
+{% block accounts_title %}Saved Jobs{% endblock accounts_title %}
+
+{% block accounts_content %}
+<div class="container-fluid">
+    <div class="card shadow-lg p-4">
+        <div class="d-flex align-items-center mb-4">
+            <h4 class="flex-grow-1">Saved Jobs</h4>
+        </div>
+        
+        {% if not saved_jobs %}
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body text-center">
+                <h4 class="card-title">No Jobs found</h4>
+                <p class="card-text">There are no job saved to display.</p>
+            </div>
+        </div>
+        {% else %}
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for job in saved_jobs %}
+            <div class="col-md-12">
+                <div class="card h-100 border-custom shadow">
+                    <div class="card-header bg-custom text-white">
+                        <h5 class="mb-0">{{ job.job.job_title.title }}</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if job.job.location %}
+                        <div class="d-flex align-items-center">
+                            <p><strong>Location: </strong>{{ job.job.location }}</p>
+                        </div>
+                        {% endif %}
+                        {% if job.job.salary_from %}
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="badge salary-badge">₹{{ job.job.salary_from|intcomma }}{% if job.job.salary_to %} - ₹{{ job.job.salary_to|intcomma }}{% endif %}</span>
+                        </div>
+                        {% endif %}
+                        <a href="{% url "job:job-detail" job.job.id %}" target="_blank" class="btn btn-custom">View</a>
+                    </div>
+                    <div class="card-footer bg-light d-flex justify-content-between">
+                        <form method="post" class="ms-auto">
+                            {% csrf_token %}
+                            <input type="hidden" name="job_id" value="{{ job.id }}">
+                            <input type="hidden" name="action" value="delete">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock accounts_content %}

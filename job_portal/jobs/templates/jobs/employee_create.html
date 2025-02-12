@@ -1,0 +1,36 @@
+{% extends 'shared/base.html' %}
+
+{% block title %}Employee Profile{% endblock title %}
+
+{% block content %}
+<div class="modal modal-sheet position-static d-block p-4 py-md-5" tabindex="-1" role="dialog" id="modalSelectProfile">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header p-5 bg-white pb-4 justify-content-center border-bottom-0">
+                <h1 class="fw-bold mb-0 fs-2 auth-text">Employer Profile</h1>
+            </div>
+            <div class="modal-body mt-5 p-5 pt-0">
+                <!-- Employer Form -->
+                <form method="post">
+                    {% include 'components/form_field.html' with field=form.title %}
+                    {% include 'components/form_field.html' with field=form.company %}
+                    {% include 'components/form_field.html' with field=form.location %}
+                    <div class="d-grid">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-custom mt-2">Save Profile</button>
+                    </div>
+                    {% if not user.jobportalprofile %}
+                    <div class="d-grid mt-3">
+                        <a href="{% url "job:select_profile" %}" class="btn btn-black mt-2">Go Back</a>
+                    </div>
+                    {% else %}
+                    <div class="d-grid mt-3">
+                        <a href="{% url "job_profile:job_profile" %}" class="btn btn-black mt-2">Go Back</a>
+                    </div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

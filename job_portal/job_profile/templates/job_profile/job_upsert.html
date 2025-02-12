@@ -1,0 +1,244 @@
+{% extends 'job_profile/shared/accounts_base.html' %}
+
+{% block accounts_title %}
+    {% if request.path == '/job-profile/job/create/' %}
+        Add Job
+    {% else %}
+        Update Job
+    {% endif %}
+{% endblock accounts_title %}
+
+{% block accounts_content %}
+<style>
+    .tinymce-container {
+        width: 100%;
+        margin: 0 auto;
+    }
+    .tinymce:focus {
+        border-radius: 0.5px;
+        box-shadow: 0 0 0 4px #fff, 0 0 0 7px #706fd333;
+        outline: 0;
+      }
+    textarea {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .tox {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+    }
+    .tox .tox-toolbar {
+        background: #fff;
+        border-bottom: 1px solid #ddd;
+        padding: 5px; /* Add padding to the toolbar */
+    }
+    .tox .tox-toolbar__group {
+        CONTAIN-INTRINSIC-BLOCK-SIZE: AUTO 100PX;
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0 4px; /* Padding for spacing inside the group */
+    }
+    .tox .tox-toolbar__group > * {
+        margin-right: 8px; /* Add space between individual elements */
+    }
+    .tox .tox-toolbar__group > *:last-child {
+        margin-right: 0; /* Remove margin from the last element */
+    }
+    .tox .tox-editor-header {
+        border-bottom: 1px solid #ddd;
+    }
+    .tox .tox-sidebar {
+        background: #f9f9f9;
+    }
+    .tox .tox-statusbar {
+        background: #fff;
+        border-top: 1px solid #ddd;
+    }
+    .tox .tox-tbtn {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        transition: background 0.3s ease, color 0.3s ease;
+        color: #000; /* Default text color */
+    }
+    .tox .tox-tbtn:hover {
+        background: #f0f0f0;
+    }
+    .tox .tox-tbtn--enabled {
+        background: #0056b3 !important;
+        color: #fff !important;
+        border-color: #0056b3 !important;
+    }
+    .tox .tox-tbtn--enabled:hover {
+        background: #004299 !important;
+    }
+    .tox .tox-tbtn--enabled.tox-tbtn--active {
+        background: #003366 !important;
+        color: #fff !important;
+        border-color: #003366 !important;
+    }
+    .tox .tox-tbtn--enabled svg, .tox .tox-tbtn--enabled .tox-icon {
+        fill: #fff !important; /* Ensure the icon color is white when enabled */
+    }
+    .tox .tox-tbtn--enabled:hover svg, .tox .tox-tbtn--enabled:hover .tox-icon {
+        fill: #fff !important; /* Ensure the icon color remains white when hovered */
+    }
+    .tox .tox-edit-area__iframe {
+        scrollbar-width: thin;
+        scrollbar-color: #ccc #f9f9f9;
+    }
+    .tox .tox-edit-area__iframe::-webkit-scrollbar {
+        width: 8px;
+    }
+    .tox .tox-edit-area__iframe::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 4px;
+    }
+    .tox .tox-edit-area__iframe::-webkit-scrollbar-track {
+        background: #f9f9f9;
+    }
+    
+</style>
+
+<script src="https://cdn.tiny.cloud/1/2hgv81y54xc01vmnbp8pre1ylwsfvvamsla2umvzuma66wa2/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+
+        var uploadImageUrl = "{% url 'job_profile:upload_image' %}";
+        tinymce.init({
+            selector: 'textarea',
+            height: 360,
+            plugins: 'advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table help wordcount autosave directionality emoticons code sample autoresize nonbreaking space',
+            toolbar: 'undo redo | formatselect | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | outdent indent | bullist numlist | link image | removeformat | code | searchreplace | anchor',
+            image_advtab: true,
+            content_css: [
+                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+                'https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.2.1/skins/ui/oxide/content.inline.min.css'
+            ],
+            font_formats: 'Andale Mono=andale mono,times;' +
+                          'Arial=arial,helvetica,sans-serif;' +
+                          'Arial Black=arial black,avant garde;' +
+                          'Book Antiqua=book antiqua,palatino;' +
+                          'Comic Sans MS=comic sans ms,sans-serif;' +
+                          'Courier New=courier new,courier;' +
+                          'Georgia=georgia,palatino;' +
+                          'Helvetica=helvetica;' +
+                          'Impact=impact,chicago;' +
+                          'Symbol=symbol;' +
+                          'Tahoma=tahoma,arial,helvetica,sans-serif;' +
+                          'Terminal=terminal,monaco;' +
+                          'Times New Roman=times new roman,times;' +
+                          'Trebuchet MS=trebuchet ms,geneva;' +
+                          'Verdana=verdana,geneva;' +
+                          'Webdings=webdings;' +
+                          'Wingdings=wingdings,zapf dingbats',
+            contextmenu: 'formats link image',
+            menubar: true,
+            statusbar: true,
+            images_upload_handler: function (blobInfo, success, failure) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', uploadImageUrl);
+                xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken')); // Include CSRF token
+
+                xhr.onload = function() {
+                    var json;
+                    if (xhr.status != 200) {
+                        failure('HTTP Error: ' + xhr.status);
+                        return;
+                    }
+                    json = JSON.parse(xhr.responseText);
+                    if (!json.location) {
+                        failure('Invalid JSON: ' + xhr.responseText);
+                        return;
+                    }
+                    success(json.location);
+                };
+
+                var formData = new FormData();
+                formData.append('file', blobInfo.blob(), blobInfo.filename());
+                xhr.send(formData);
+            }
+        });
+    });
+</script>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        {% if request.path == '/job-profile/job/create/' %}
+                            <h1 class="card-title text-center mb-4">Add Job</h1>
+                        {% else %}
+                            <h1 class="card-title text-center mb-4">Update Job</h1>
+                        {% endif %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {% include 'components/form_field.html' with field=form.job_title %}
+                                {% comment %} <button type="button" id="open-modal-button" class="btn btn-secondary">Add New Job Title</button> {% endcomment %}
+                            </div>
+                            {% include 'components/form_field.html' with field=form.location %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {% include 'components/form_field.html' with field=form.salary_from %}
+                                </div>
+                                <div class="col-md-6">
+                                    {% include 'components/form_field.html' with field=form.salary_to %}
+                                </div>
+                            </div>
+                            {% include 'components/form_field.html' with field=form.expected_joining_date %}
+                            {% include 'components/form_field.html' with field=form.job_description %}
+                            <div class="d-grid mt-3 mb-5">
+                                <button type="submit" class="btn btn-custom btn-block">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Modal for Adding Job Title -->
+    <div class="modal fade" id="addJobTitleModal" tabindex="-1" aria-labelledby="addJobTitleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addJobTitleModalLabel">Add New Job Title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="new-job-title">New Job Title</label>
+                        <input type="text" id="new-job-title" class="form-control" placeholder="Enter new job title">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="add-job-title" class="btn btn-custom">Add Job Title</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+{% endblock accounts_content %}

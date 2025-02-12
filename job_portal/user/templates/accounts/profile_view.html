@@ -1,0 +1,335 @@
+{% extends 'accounts/shared/accounts_base.html' %}
+{% load static %}
+{% block accounts_title %}Profile{% endblock accounts_title %}
+
+{% block accounts_content %}
+<div class="container-fluid">
+    <div class="card shadow-lg p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="text-center">Your Profile</h1>
+            <div class="ms-auto">
+                <a href="{% url 'user:profile_update' %}" class="btn btn-custom">Edit</a>
+            </div>
+        </div>
+        <div class="row g-0">
+            <div class="col-md-12 d-flex flex-column align-items-center mb-3">
+                {% if user.profile_photo %}
+                    <img src="{{ user.profile_photo.url }}" class="img-fluid rounded-circle profile-picture shadow-sm" style="max-height: 200px;" alt="Profile Picture">
+                {% else %}
+                    <img src="{% static 'users/images/default-avatar.jpg' %}" class="img-fluid rounded-circle profile-picture shadow-sm" style="max-height: 200px;" alt="Profile Picture">
+                {% endif %}
+                <h4 class="mt-2">{{ user.first_name }} {{ user.last_name }}</h4>
+                <p class="text-muted">{{ user.username }}</p>
+                {% if user.short_reel %}
+                    <a href="#" class="btn btn-outline-custom btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#shortReelModal">View Reel</a>
+                {% else %}
+                    <p class="text-muted mt-2">No reel uploaded.</p>
+                {% endif %}
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 mb-3 d-flex">
+                                <div class="card w-100">
+                                    <div class="card-body d-flex flex-column">
+                                        <h5 class="card-title">Email</h5>
+                                        <p class="card-text flex-grow-1">{{ user.email }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mb-3 d-flex">
+                                <div class="card w-100">
+                                    <div class="card-body d-flex flex-column">
+                                        <h5 class="card-title">Age</h5>
+                                        <p class="card-text flex-grow-1">{{ user.age }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mb-3 d-flex">
+                                <div class="card w-100">
+                                    <div class="card-body d-flex flex-column">
+                                        <h5 class="card-title">Phone</h5>
+                                        <p class="card-text flex-grow-1">{{ user.phone }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mb-3 d-flex">
+                                <div class="card w-100">
+                                    <div class="card-body d-flex flex-column">
+                                        <h5 class="card-title">Qualification</h5>
+                                        <p class="card-text flex-grow-1">{{ user.get_qualification_display }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mb-3 d-flex">
+                                <div class="card w-100">
+                                    <div class="card-body d-flex flex-column">
+                                        <h5 class="card-title">Smoking Habit</h5>
+                                        <p class="card-text flex-grow-1">{{ user.get_smoking_habit_display }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mb-3 d-flex">
+                                <div class="card w-100">
+                                    <div class="card-body d-flex flex-column">
+                                        <h5 class="card-title">Drinking Habit</h5>
+                                        <p class="card-text flex-grow-1">{{ user.get_drinking_habit_display }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mb-3 d-flex">
+                                <div class="card w-100">
+                                    <div class="card-body d-flex flex-column">
+                                        <h5 class="card-title">DOB</h5>
+                                        <p class="card-text flex-grow-1">{{ user.dob }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-6 mb-3">
+                                <div class="card h-100">
+                                    <div class="card-body d-flex flex-column">
+                                        <h5 class="card-title d-flex justify-content-between align-items-center">
+                                            Hobbies
+                                            <a href="{% url "user:add_hobby" %}" class="btn btn-sm btn-outline-custom">Add</a>
+                                        </h5>
+                                        <p class="card-text">
+                                            {% for hobby in request.user.userhobby_set.all %}
+                                                <span class="badge align-items-center p-2 pe-3 text-success-emphasis bg-success-subtle border border-success-subtle rounded-pill mt-2" style="font-size: medium;">
+                                                    <span class="px-1">{{ hobby.hobby }}</span>
+                                                    <a href="{% url "user:delete_hobby" hobby.id %}" onclick="return confirm('Are you sure you want to delete this hobby?');"><i class="fa-regular fa-circle-xmark"></i></a>
+                                                </span>
+                                            {% endfor %}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-3">
+                                <div class="card h-100">
+                                    <div class="card-body d-flex flex-column">
+                                        <h5 class="card-title d-flex justify-content-between align-items-center">
+                                            Interests
+                                            <a href="{% url "user:add_interest" %}" class="btn btn-sm btn-outline-custom">Add</a>
+                                        </h5>
+                                        <p class="card-text">
+                                            {% for interest in request.user.userinterest_set.all %}
+                                                <span class="badge align-items-center p-2 pe-3 text-success-emphasis bg-success-subtle border border-success-subtle rounded-pill mt-2" style="font-size: medium;">
+                                                    <span class="px-1">{{ interest.interest }}</span>
+                                                    <a href="{% url "user:delete_interest" interest.id %}" onclick="return confirm('Are you sure you want to delete this interest?');"><i class="fa-regular fa-circle-xmark"></i></a>
+                                                </span>
+                                            {% endfor %}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h1 class="display-5 text-center">Uploaded Images</h1>
+                                <div class="ms-auto">
+                                    <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#uploadImageModal" id='openimageuploadmodel'>
+                                        <i class="fa-solid fa-upload"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                {% if user.userimages_set.count > 4 %}
+                                    {% for image in user.userimages_set.all|dictsortreversed:"created_date"|slice:":3" %}
+                                        <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                                            <div class="card">
+                                                <img src="{{ image.image.url }}" class="img-fluid rounded uploaded-image shadow-sm" alt="Uploaded Image">
+                                                <a href="{% url 'user:delete_image' image.pk %}" class="position-absolute top-0 start-0 m-3 text-decoration-none btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this image?');">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                    <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                                        <a href="#" class="d-block img-fluid rounded shadow-sm" data-bs-toggle="modal" data-bs-target="#imagesModal">
+                                            <div class="card">
+                                                <img src="{% static 'users/images/ViewAll.png' %}" class="img-fluid rounded shadow-sm" alt="Placeholder Image">
+                                            </div>
+                                        </a>
+                                    </div>
+                                {% else %}
+                                    {% for image in user.userimages_set.all|dictsortreversed:"created_date" %}
+                                        <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                                            <div class="card">
+                                                <img src="{{ image.image.url }}" class="img-fluid rounded uploaded-image shadow-sm" alt="Uploaded Image">
+                                                <a href="{% url 'user:delete_image' image.pk %}" class="position-absolute top-0 start-0 m-3 text-decoration-none btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this image?');">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    {% empty %}
+                                        <div class="col">
+                                            <p class="text-muted">No images uploaded.</p>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Modal Structure -->
+<div class="modal fade" id="imagesModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">All Images</h5>
+                <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close"><i class="fa-regular fa-circle-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    {% for image in user.userimages_set.all|dictsortreversed:"created_date" %}
+                        {% if image.image %}
+                        <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                            <div class="card">
+                                <img src="{{ image.image.url }}" class="img-fluid rounded uploaded-image shadow-sm" alt="Uploaded Image">
+                                <a href="{% url 'user:delete_image' image.pk %}" class="position-absolute top-0 start-0 m-3 text-decoration-none btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this image?');">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </div>
+                        </div>                    
+                        {% endif %}
+                    {% empty %}
+                        <div class="col">
+                            <p class="text-muted">No additional images.</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="uploadImageModal" tabindex="-1" role="dialog" aria-labelledby="uploadImageModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="uploadImageModalLabel">Upload Image</h5>
+                <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close"><i class="fa-regular fa-circle-xmark"></i></button>
+            </div>
+            <form method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    {% csrf_token %}
+                    {% include 'components/form_field.html' with field=image_form.image %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-black" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-custom">Upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="shortReelModal" tabindex="-1" aria-labelledby="shortReelModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="shortReelModalLabel">Short Reel</h5>
+                <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close"><i class="fa-regular fa-circle-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="video-container">
+                {% if user.short_reel %}
+                    <video id="player" width="100%" style="max-height: 600px;">
+                        <source src="{{ user.short_reel.url }}" id="videoSource" type="video/webm">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="custom-video-controls">
+                        <div class="time-display">
+                            <span id="current-time">00:00:00.000</span>
+                            <span id="total-duration">00:00:00.000</span>
+                        </div>
+                        <div class="progress-container" id="progress-container">
+                            <div class="progress-bar" id="progress-bar"></div>
+                          </div>
+                        <div class="controls">
+                          <button id="backward-btn"><i class="fa-solid fa-backward"></i></button>
+                          <button id="playpause-btn"><i class="fa-regular fa-circle-play"></i></button>
+                          <button id="forward-btn"><i class="fa-solid fa-forward"></i></button>
+                        </div>
+                        <div class="controls">
+                          <input type="range" id="volume-bar" min="0" max="1" step="0.01" value="1">
+                        </div>
+                      </div>
+                {% else %}
+                    <p class="text-muted">No reel uploaded.</p>
+                {% endif %}
+                </div>
+            </div>            
+        </div>
+    </div>
+</div>
+
+<!-- Modal for transparent image popup -->
+<div class="modal fade transparent-modal" id="imagePopupModal" tabindex="-1" role="dialog" aria-labelledby="imagePopupModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content border-0">
+            <div class="modal-body p-0">
+                <div class="modal-image-container position-relative">
+                    <img src="" id="popupImage" class="img-fluid" alt="Popup Image"> <!-- Actual Image -->
+                    <button type="button" class="btn-close-custom position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"><i class="fa-regular fa-circle-xmark"></i></button> <!-- Close Button -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    // JavaScript to handle image loading and display placeholders
+    document.addEventListener('DOMContentLoaded', function() {
+        var img = document.getElementById('popupImage');
+        var placeholder = document.querySelector('.img-placeholder');
+        var spinner = document.querySelector('.loading-spinner');
+        
+        img.onload = function() {
+            placeholder.classList.add('d-none');
+            img.classList.remove('d-none');
+            spinner.classList.add('d-none');
+        };
+        
+        img.onerror = function() {
+            img.classList.add('d-none');
+            spinner.classList.add('d-none');
+            placeholder.innerHTML = '<p class="text-muted">Failed to load image.</p>'; // Display error message if image fails to load
+        };
+    });
+
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        var images = document.querySelectorAll('.uploaded-image');
+        var popupImage = document.getElementById('popupImage');
+        var imagePopupModal = new bootstrap.Modal(document.getElementById('imagePopupModal'));
+
+        images.forEach(function(image) {
+            image.addEventListener('click', function() {
+                popupImage.src = image.src;
+                imagePopupModal.show();
+            });
+        });
+
+        if ({{ form_errors|yesno:"true,false" }}) {
+            var modalElement = document.getElementById('uploadImageModal');
+            var modal = new bootstrap.Modal(modalElement);
+            modal.show();
+        }
+    });
+</script>
+
+{% endblock accounts_content %}

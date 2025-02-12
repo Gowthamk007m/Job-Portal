@@ -1,0 +1,169 @@
+{% extends 'admin_panel/layout/base.html' %}
+{% load static %}
+{% block title %}User Detail{% endblock title %}
+{% block content %}
+<style>
+   .button-group {
+       text-align: right;
+       margin-top: 20px;
+   }
+   .button-group button {
+       margin-left: 10px;
+   }
+   .badge {
+       display: inline-block;
+       padding: 0.25em 0.4em;
+       font-size: 95%;
+       font-weight: 700;
+       line-height: 1;
+       text-align: center;
+       white-space: nowrap;
+       vertical-align: baseline;
+       border-radius: 0.25rem;
+       margin-right: 5px;
+       margin-top: 5px;
+   }
+   .badge-primary {
+       color: #fff;
+       background-color: #007bff;
+   }
+   .container-fluid {
+       margin-top: 20px;
+   }
+</style>
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">User Details</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <div class="profile-img mt-1">
+                            <img class="profile-pic img-fluid" src="{% static 'admin_panel/assets/images/user/11.png' %}" alt="profile-pic">
+                        </div>
+                        <div class="user-role mt-3">
+                            <h3>John Doe</h3>
+                            <p>Web Developer</p>
+                        </div>
+                        <div class="social-links mt-3">
+                            <h6>Social Links:</h6>
+                            <p>Facebook:<br><a href="https://facebook.com/user">https://facebook.com/user</a></p>
+                            <p>Twitter:<br><a href="https://twitter.com/user">https://twitter.com/user</a></p>
+                            <p>Instagram:<br><a href="https://instagram.com/user">https://instagram.com/user</a></p>
+                            <p>LinkedIn:<br><a href="https://linkedin.com/in/user">https://linkedin.com/in/user</a></p>
+                        </div>
+                        <div class="skills mt-3">
+                            <h6>Skills:</h6>
+                            <span class="badge badge-primary">HTML</span>
+                            <span class="badge badge-primary">CSS</span>
+                            <span class="badge badge-primary">JavaScript</span>
+                            <span class="badge badge-primary">React</span>
+                            <span class="badge badge-primary">Node.js</span>
+                        </div>
+                        <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#resumeModal">View Resume</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Personal Information</h4>
+                        </div>
+                        <div class="button-group">
+                            <a href="{% url "admin-d:userupdate" %}" class="btn btn-danger">Delete</a>
+                            <a href="{% url "admin-d:userupdate" %}" class="btn btn-warning">Deactivate</a>
+                            <a href="{% url "admin-d:userupdate" %}" class="btn btn-info">Edit</a>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <div class="new-user-info">
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label>Mobile Number:</label>
+                                    <p>+1 234 567 890</p>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Alternate Contact:</label>
+                                    <p>+1 987 654 321</p>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Email:</label>
+                                    <p>john.doe@example.com</p>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Pin Code:</label>
+                                    <p>12345</p>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label>Town/City:</label>
+                                    <p>New York</p>
+                                </div>
+                                
+                                <div class="form-group col-sm-12">
+                                  <label>Country:</label>
+                                  <p>USA</p>
+                              </div>
+                            </div>
+                            <div class="checkbox">
+                                <label>Two-Factor Authentication:</label>
+                                <p>Enabled</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="iq-card mt-3">
+                    <div class="iq-card-header">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Education</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <ul>
+                            <li><strong>B.Sc. in Computer Science</strong>, University of Example, 2015-2019</li>
+                            <li><strong>M.Sc. in Software Engineering</strong>, University of Sample, 2019-2021</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="iq-card mt-3">
+                    <div class="iq-card-header">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Experience</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <ul>
+                            <li><strong>Web Developer</strong>, Example Corp, 2021-Present</li>
+                            <li><strong>Junior Developer</strong>, Sample Inc, 2019-2021</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Resume Modal -->
+<div class="modal fade" id="resumeModal" tabindex="-1" aria-labelledby="resumeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="resumeModalLabel">Resume</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe src="{% static "admin_panel/assets/pdf/Profile.pdf" %}" width="100%" height="600px"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

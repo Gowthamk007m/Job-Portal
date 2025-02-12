@@ -1,0 +1,95 @@
+{% extends 'shared/base.html' %}
+
+{% block title %}Enter Details{% endblock title %}
+
+{% block content %}
+<div class="container-fluid mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10 col-sm-12">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h1 class="text-center mb-4">Enter Details</h1>
+                    <form method="post" enctype="multipart/form-data">
+                        {% include 'components/form_field.html' with field=form.profile_photo %}
+                        <div class="row">
+                            
+                            <div class="col-md-6">
+                                {% include 'components/form_field.html' with field=form.qualification %}
+                            </div>
+                            <div class="col-md-6">
+                                {% include 'components/form_field.html' with field=form.dob %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                {% include 'components/form_field.html' with field=hobby_form.hobbies %}
+                            </div>
+                            <div class="col-md-6">
+                                {% include 'components/form_field.html' with field=interest_form.interests %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                {% include 'components/form_field.html' with field=form.smoking_habit %}
+                            </div>
+                            <div class="col-md-6">
+                                {% include 'components/form_field.html' with field=form.drinking_habit %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                {% include 'components/form_field.html' with field=image_form.image %}
+                            </div>
+                            <div class="col-md-6">
+                                {% include 'components/form_field.html' with field=form.short_reel %}
+                            </div>
+                        </div>
+                        <div class="d-grid">
+                            {% csrf_token %}
+                            <button type="submit" id="submit-button" class="btn btn-custom mt-4">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById('id_dob').addEventListener('input', function() {
+        const dob = new Date(this.value);
+        const age = calculateAge(dob);
+        const errorElementId = 'age-error';
+        let errorElement = document.getElementById(errorElementId);
+        const submitButton = document.getElementById('submit-button');
+
+        if (age < 18) {
+            if (!errorElement) {
+                errorElement = document.createElement('p');
+                errorElement.id = errorElementId;
+                errorElement.className = 'text-danger';
+                errorElement.innerText = 'You must be at least 18 years old.';
+                this.parentElement.appendChild(errorElement);
+            }
+            submitButton.disabled = true;
+        } else {
+            if (errorElement) {
+                errorElement.remove();
+            }
+            submitButton.disabled = false;
+        }
+    });
+
+    function calculateAge(dob) {
+        const today = new Date();
+        let age = today.getFullYear() - dob.getFullYear();
+        const monthDifference = today.getMonth() - dob.getMonth();
+
+        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < dob.getDate())) {
+            age--;
+        }
+
+        return age;
+    }
+</script>
+{% endblock content %}
+    

@@ -1,0 +1,123 @@
+   /* Custom styles for this template */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+.card {
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.card-header {
+    background-color: #007bff;
+    color: #fff;
+    border-bottom: 1px solid rgba(0,0,0,0.125);
+}
+.card-title {
+    margin-bottom: 0;
+}
+.social-links a {
+    color: #8503ff;
+    margin-right: 10px;
+}
+.social-links a:hover {
+    color: #00ddff;
+    text-decoration: none;
+}
+.card-body {
+    padding: 20px;
+}
+.profile-pic {
+    max-width: 150px;
+    height: auto;
+    border-radius: 50%;
+    border: 5px solid #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.overview {
+    margin-bottom: 20px;
+}
+.contact-info, .additional-details {
+    margin-bottom: 20px;
+}
+.additional-details p {
+    margin-bottom: 5px;
+}
+.card .card {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.card .card-header {
+    background-color: #f8f9fa;
+    border-bottom: none;
+}
+.card .card-body {
+    padding-top: 10px;
+}
+.card .card-body p {
+    margin-bottom: 5px;
+}
+.deactivate-btn, .delete-btn {
+   
+   color: #fff;
+   border: none;
+   padding: 8px 16px;
+   border-radius: 4px;
+   cursor: pointer;
+}
+.delete-btn {
+   background-color: #ec1a2f;
+}
+.delete-btn:hover {
+   background-color: #e01e31;
+}
+.deactivate-btn {
+   background-color: #e7bf21;
+}
+.deactivate-btn:hover {
+   background-color: #c8a723;
+}
+.right-buttons {
+   display: flex;
+   gap: 10px;
+}
+
+.documentview-btn {
+    height: 50px;
+    padding: 10px 20px;
+    /* Additional custom styles */
+}
+
+.card {
+    border: none;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+}
+.card:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+.card-header {
+    padding: 10px;
+    border-bottom: 2px solid #0056b3;
+}
+.card-body {
+    padding: 20px;
+}
+.card-body label {
+    font-weight: bold;
+}
+.card-body p {
+    margin-bottom: 5px;
+}
+.badge-skill {
+    background-color: #28a745; /* Green background */
+    color: #fff; /* White text */
+    margin-right: 5px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+.btn {
+    margin-right: 10px;
+}

@@ -73,7 +73,7 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=15, blank=True, null=True)
     profile_photo = models.ImageField(upload_to='user_photos/', blank=True, null=True)
-    dob = models.DateField()
+    dob = models.DateField(null=True, blank=True)
     qualification = models.CharField(max_length=255, blank=True, null=True, choices=QUALIFICATION_CHOICES)
     smoking_habit = models.CharField(max_length=20, choices=SMOKING_CHOICES, default='Non-smoker')
     drinking_habit = models.CharField(max_length=20, choices=DRINKING_CHOICES, default='Non-drinker')
